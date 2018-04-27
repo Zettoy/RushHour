@@ -1,4 +1,4 @@
 
 public interface CarInterface {
-	void move();
+	void move(int command);
 }
