@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 public class MapGenerator implements MapInterface {
 	private static final int RED = 1;
@@ -10,11 +9,12 @@ public class MapGenerator implements MapInterface {
 	private static final Character VERTICAL   = 'V';
 	
 	private CarInterface redCar;
-	private ArrayList<CarInterface> cars;
+	private CarInterface longCar;
+	private CarInterface shortCar;
 	private int[][] map;
 	
 	public MapGenerator() {
-		cars = new ArrayList<CarInterface>();
+
 	}
 	
 	@Override
@@ -33,6 +33,7 @@ public class MapGenerator implements MapInterface {
 				map[row][col] = 0;
 		
 		addCars();
+		print();
 	}
 	
 	private void addCars() {
@@ -46,12 +47,10 @@ public class MapGenerator implements MapInterface {
 	}
 	
 	private void addCarOthers() {
-		CarInterface longCar = new CarOthers(LONG, HORIZONTAL, new Position(0, 0));
-		cars.add(longCar);
+		longCar = new CarOthers(LONG, HORIZONTAL, new Position(0, 0));
 		putOnMap((CarOthers)longCar);
 		
-		CarInterface shortCar = new CarOthers(SHORT, HORIZONTAL, new Position(1, 1));
-		cars.add(shortCar);
+		shortCar = new CarOthers(SHORT, HORIZONTAL, new Position(1, 1));
 		putOnMap((CarOthers)shortCar);
 	}
 	
