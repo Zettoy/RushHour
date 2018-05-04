@@ -1,39 +1,29 @@
 
-public class MapGenerator implements MapInterface {
+public class MapGenerator implements MapGeneratorInterface{
 	private static final int RED = 1;
-	private static final int OTHER = 9;
-	private static final int MAPSIZE = 6;
+	
 	private static final int SHORT = 2;
 	private static final int LONG  = 3;
 	private static final Character HORIZONTAL = 'H';
 	private static final Character VERTICAL   = 'V';
 	
-	private CarInterface redCar;
-	private CarInterface longCar;
-	private CarInterface shortCar;
-	private int[][] map;
+	private Map map;
 	
 	public MapGenerator() {
-
+		map = new Map();
 	}
 	
-	@Override
 	/** 
-	 * 	9 0 0 0 0 0
-	 *	9 9 0 0 0 0
-	 *	9 9 0 0 1 1
+	 * 	0 0 0 0 2 0
+	 *	0 0 0 0 2 3
+	 *	1 1 0 0 2 3
 	 *	0 0 0 0 0 0
 	 *	0 0 0 0 0 0
 	 *	0 0 0 0 0 0
 	 */
-	public void creatMap() {
-		map = new int[MAPSIZE][MAPSIZE];
-		for (int row = 0; row < MAPSIZE; row ++)
-			for (int col = 0; col < MAPSIZE; col ++)
-				map[row][col] = 0;
-		
+	public void createMap() {		
 		addCars();
-		print();
+		map.print();
 	}
 	
 	private void addCars() {
@@ -42,56 +32,21 @@ public class MapGenerator implements MapInterface {
 	}
 	
 	private void addCarRed() {
-		redCar = new CarRed(new Position(4, 2));
-		putOnMap((CarRed)redCar);
+		CarInterface redCar = new Car(RED, SHORT, HORIZONTAL, new Position(0, 2));
+		map.addCar(redCar);
 	}
 	
 	private void addCarOthers() {
-		longCar = new CarOthers(LONG, HORIZONTAL, new Position(0, 0));
-		putOnMap((CarOthers)longCar);
+		CarInterface longCar = new Car(RED + 1, LONG, VERTICAL, new Position(4, 0));
+		map.addCar(longCar);
 		
-		shortCar = new CarOthers(SHORT, HORIZONTAL, new Position(1, 1));
-		putOnMap((CarOthers)shortCar);
+		CarInterface shortCar = new Car(RED + 2, SHORT, VERTICAL, new Position(5, 1));
+		map.addCar(shortCar);
 	}
-	
-	private void putOnMap(CarRed car) {
-		int start = car.getPosition().getX();
-		map[2][start] = RED;
-		map[2][start + 1] = RED;
-	}
-	
-	private void putOnMap(CarOthers car) {
-		if (car.getDirection() == HORIZONTAL) {
-			putOnMapH(car.getPosition(), car.getLength());
-		} else if (car.getDirection() == VERTICAL){
-			putOnMapV(car.getPosition(), car.getLength());
-		}
-	}
-	
-	private void putOnMapV(Position p, int length) {
-		int start = p.getY();
-		for (int i = 0; i < length; i ++) {
-			map[p.getX()][start] = OTHER;
-			start ++;
-		}
-	}
-	
-	private void putOnMapH(Position p, int length) {
-		int start = p.getX();
-		for (int i = 0; i < length; i ++) {
-			map[start][p.getY()] = OTHER;
-			start ++;
-		}
-	}
-	
-	public void print() {
-		for (int i = 0; i < 6; i ++) {
-			for (int j = 0; j < 6; j ++) {
-				System.out.print(map[i][j]);
-				if (j != 5) System.out.print(" ");
-			}
-			if (i != 5) System.out.println();
-		}
+
+	@Override
+	public MapInterface getMap() {
+		return map;
 	}
 
 }

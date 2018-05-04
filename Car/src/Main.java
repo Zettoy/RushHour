@@ -1,7 +1,7 @@
 
 public class Main {
 	public static void main (String[] args) {
-		GameEngine newGame = new GameEngine();
-		newGame.generateMap();
+		GameInterface newGame = new Game();
+		newGame.gameStart();
 	}
 }
