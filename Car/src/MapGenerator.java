@@ -1,4 +1,5 @@
 
+//TODO: algorithm to randomly generate maps
 public class MapGenerator implements MapGeneratorInterface{	
 	private Map map;
 	
@@ -16,7 +17,6 @@ public class MapGenerator implements MapGeneratorInterface{
 	 */
 	public void createMap() {		
 		addCars();
-		//map.print();
 	}
 	
 	private void addCars() {

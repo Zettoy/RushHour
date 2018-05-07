@@ -4,12 +4,20 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+//TODO: add input for other cars
+
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private GameInterface game;
 	
 	public GamePanel (GameInterface game) {
 		this.game = game;
+		
+		this.setLayout(null);
+		this.setBackground(Color.WHITE);
+		this.addKeyListener(new KeyInput(game, this));
+		this.setFocusable(true);
+		this.requestFocus();
 	}
 	
 	@Override
