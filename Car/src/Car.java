@@ -1,12 +1,5 @@
 
-public class Car implements CarInterface {
-	private static final int RED = 1;
-	
-	private static final int LEFT  = 0;
-	private static final int RIGHT = 1;
-	private static final int UP    = 2;
-	private static final int DOWN  = 3;
-	
+public class Car implements CarInterface {	
 	private int id;
 	private int length;
 	private Position position;
@@ -22,16 +15,16 @@ public class Car implements CarInterface {
 	@Override
 	public void move(int direction) {
 		switch(direction) {
-			case LEFT:
+			case Constants.LEFT:
 				moveLeft();
 				break;
-			case RIGHT:
+			case Constants.RIGHT:
 				moveRight();
 				break;
-			case UP:
+			case Constants.UP:
 				moveUp();
 				break;
-			case DOWN:
+			case Constants.DOWN:
 				moveDown();
 				break;
 		}
@@ -71,7 +64,7 @@ public class Car implements CarInterface {
 
 	@Override
 	public boolean isRedCar() {
-		if (id == RED) return true;
+		if (id == Constants.RED) return true;
 		
 		return false;
 	}
