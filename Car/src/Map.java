@@ -1,17 +1,13 @@
 import java.util.ArrayList;
 
-public class Map implements MapInterface{
-	private static final int MAPSIZE = 6;
-	private static final Character HORIZONTAL = 'H';
-	private static final Character VERTICAL   = 'V';
-	
+public class Map implements MapInterface{	
 	private ArrayList<CarInterface> cars;
 	private int[][] map;
 
 	public Map() {
-		map = new int[MAPSIZE][MAPSIZE];
-		for (int row = 0; row < MAPSIZE; row ++)
-			for (int col = 0; col < MAPSIZE; col ++)
+		map = new int[Constants.MAPSIZE][Constants.MAPSIZE];
+		for (int row = 0; row < Constants.MAPSIZE; row ++)
+			for (int col = 0; col < Constants.MAPSIZE; col ++)
 				map[row][col] = 0;
 		
 		cars = new ArrayList<>();
@@ -40,10 +36,15 @@ public class Map implements MapInterface{
 		putOnMap(car);
 	}
 	
+	@Override
+	public int getNumCars() {
+		return cars.size();
+	}
+	
 	private void putOnMap(CarInterface car) {
-		if (car.getDirection() == HORIZONTAL) {
+		if (car.getDirection() == Constants.HORIZONTAL) {
 			putOnMapH(car);
-		} else if (car.getDirection() == VERTICAL){
+		} else if (car.getDirection() == Constants.VERTICAL){
 			putOnMapV(car);
 		}
 	}
@@ -69,9 +70,9 @@ public class Map implements MapInterface{
 	}
 	
 	private void removeFromMap(CarInterface car) {
-		if (car.getDirection() == HORIZONTAL) {
+		if (car.getDirection() == Constants.HORIZONTAL) {
 			removeFromMapH(car);
-		} else if (car.getDirection() == VERTICAL){
+		} else if (car.getDirection() == Constants.VERTICAL){
 			removeFromMapV(car);
 		}
 	}
