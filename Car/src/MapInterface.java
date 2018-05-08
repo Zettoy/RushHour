@@ -5,5 +5,5 @@ public interface MapInterface {
 	void moveCar(int carId, int direction);
 	int getNumCars();
 	
-	void print();
+	MapInterface clone();
 }

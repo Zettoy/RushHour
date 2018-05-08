@@ -6,4 +6,6 @@ public interface CarInterface {
 	Character getDirection();
 	Position getPosition();
 	int getId();
+	
+	CarInterface clone();
 }

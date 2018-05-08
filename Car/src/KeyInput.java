@@ -11,35 +11,31 @@ public class KeyInput implements KeyListener {
 	}
 	
 	@Override
-	public void keyPressed(KeyEvent e) {
-		int direction = 0;
-		int carId = 0;
-		
+	public void keyPressed(KeyEvent e) {		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			direction = Constants.UP;
+			game.moveCar(Constants.UP);
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			direction = Constants.DOWN;
+			game.moveCar(Constants.DOWN);
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			direction = Constants.LEFT;
+			game.moveCar(Constants.LEFT);
 			
 		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			direction = Constants.RIGHT;
+			game.moveCar(Constants.RIGHT);
 			
 		} else if (e.getKeyCode() >= KeyEvent.VK_A &&
 				   e.getKeyCode() <= KeyEvent.VK_Z) {
-			carId = e.getKeyCode() - KeyEvent.VK_A + 1;
+			int carId = e.getKeyCode() - KeyEvent.VK_A + 1;
+			game.selectCar(carId);
+		
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			game.gameRestart();
 			
 		} else {
 			throw new IllegalStateException();
 		}
 		
-		if (carId == 0) {
-			game.moveCar(direction);
-		} else {
-			game.selectCar(carId);
-		}
 		gamePanel.repaint();
 		
 		if (game.isWin()) {

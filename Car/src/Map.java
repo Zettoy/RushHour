@@ -133,14 +133,17 @@ public class Map implements MapInterface{
 	}
 	
 	@Override
-	public void print() {
-		for (int i = 0; i < 6; i ++) {
-			for (int j = 0; j < 6; j ++) {
-				System.out.print(map[i][j]);
-				if (j != 5) System.out.print(" ");
-			}
-			System.out.println();
-		}
+	public MapInterface clone() {
+		Map clone = new Map();
+		clone.map = new int[Constants.MAPSIZE][Constants.MAPSIZE];
+		for (int row = 0; row < Constants.MAPSIZE; row ++)
+			for (int col = 0; col < Constants.MAPSIZE; col ++)
+				clone.map[row][col] = map[row][col];
+		
+		clone.cars = new ArrayList<>();
+		for (CarInterface c : cars)
+			clone.cars.add(c.clone());
+		
+		return clone;
 	}
-	
 }

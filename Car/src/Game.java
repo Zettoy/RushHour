@@ -1,22 +1,24 @@
 
 public class Game implements GameInterface {	
-	private MapInterface map;
+	private MapInterface activeMap;
+	private MapInterface initMap;
 	private MapGeneratorInterface mapGenerator;
 	private int selectedCar;
 	
 	public Game () {
-		this.mapGenerator = new MapGenerator();
-		this.selectedCar = Constants.RED;
+
 	}
 	
 	@Override
 	public void gameStart() {
 		generateMap();
+		activeMap = initMap.clone();
+		selectedCar = Constants.RED;
 	}
 	
 	@Override
 	public void moveCar(int direction) {
-		map.moveCar(selectedCar, direction);
+		activeMap.moveCar(selectedCar, direction);
 	}
 	
 	@Override
@@ -26,14 +28,14 @@ public class Game implements GameInterface {
 	
 	@Override
 	public boolean isWin() {
-		if (map.getCar(Constants.RED).getPosition().getX() == 4) return true;
+		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) return true;
 		
 		return false;
 	}
 	
 	@Override
 	public MapInterface getMap() {
-		return map;
+		return activeMap;
 	}
 	
 	@Override
@@ -43,12 +45,22 @@ public class Game implements GameInterface {
 
 	@Override
 	public void gameRestart() {
-		// TODO Auto-generated method stub
+		activeMap = initMap.clone();
+		selectedCar = Constants.RED;
 		
 	}
 	
 	private void generateMap() {
+		mapGenerator = new MapGenerator();
 		mapGenerator.createMap();
-		map = mapGenerator.getMap();
+		initMap = mapGenerator.getMap();
 	}
+	
+	/* Example of using other map generators
+	private void generateMapHard() {
+		mapGenerator = new MapGeneratorHard();
+		mapGenerator.createMap();
+		initMap = mapGenerator.getMap();
+	}
+	 */
 }
