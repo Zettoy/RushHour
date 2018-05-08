@@ -39,8 +39,26 @@ public class Car implements CarInterface {
 		return direction;
 	}
 	
+	@Override
+	public boolean isRedCar() {
+		if (id == Constants.RED) return true;
+		
+		return false;
+	}
+
+	@Override
+	public int getId() {
+		return id;
+	}
+	
+	@Override
 	public int getLength() {
 		return length;
+	}
+	
+	@Override
+	public CarInterface clone() {
+		return new Car(id, length, direction, position.clone());
 	}
 	
 	private void moveLeft() {
@@ -61,17 +79,4 @@ public class Car implements CarInterface {
 		position.setY(position.getY() + 1);
 		
 	}
-
-	@Override
-	public boolean isRedCar() {
-		if (id == Constants.RED) return true;
-		
-		return false;
-	}
-
-	@Override
-	public int getId() {
-		return id;
-	}
-	
 }

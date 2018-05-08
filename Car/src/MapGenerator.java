@@ -1,5 +1,4 @@
 
-
 //TODO: algorithm to randomly generate maps
 public class MapGenerator implements MapGeneratorInterface{	
 	private Map map;
@@ -37,18 +36,10 @@ public class MapGenerator implements MapGeneratorInterface{
 		CarInterface shortCar = new Car(Constants.RED + 2, Constants.SHORT, Constants.VERTICAL, new Position(5, 1));
 		map.addCar(shortCar);
 	}
-		
+
 	@Override
 	public MapInterface getMap() {
 		return map;
-	}
-
-	@Override
-	public MapInterface copyMap(MapInterface original) {
-		MapInterface copy = new Map();
-		copy.setMatrix(original.getMatrix());
-		copy.setCarList(original.getCarList());		
-		return copy;
 	}
 
 }
