@@ -1,6 +1,7 @@
 
 public class Game implements GameInterface {	
 	private MapInterface map;
+	private MapInterface spareMap;
 	private MapGeneratorInterface mapGenerator;
 	private int selectedCar;
 	
@@ -43,12 +44,14 @@ public class Game implements GameInterface {
 
 	@Override
 	public void gameRestart() {
-		// TODO Auto-generated method stub
+		map = spareMap;
 		
 	}
 	
 	private void generateMap() {
 		mapGenerator.createMap();
 		map = mapGenerator.getMap();
+		spareMap = mapGenerator.copyMap(map);
+	
 	}
 }

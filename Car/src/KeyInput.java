@@ -31,6 +31,9 @@ public class KeyInput implements KeyListener {
 				   e.getKeyCode() <= KeyEvent.VK_Z) {
 			carId = e.getKeyCode() - KeyEvent.VK_A + 1;
 			
+		} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+			game.gameRestart();
+			
 		} else {
 			throw new IllegalStateException();
 		}

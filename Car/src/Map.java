@@ -12,7 +12,7 @@ public class Map implements MapInterface{
 		
 		cars = new ArrayList<>();
 	}
-
+	
 	@Override
 	public void addCar(CarInterface car) {
 		putOnMap(car);		
@@ -131,7 +131,7 @@ public class Map implements MapInterface{
 		}
 		return true;
 	}
-	
+		
 	@Override
 	public void print() {
 		for (int i = 0; i < 6; i ++) {
@@ -141,6 +141,29 @@ public class Map implements MapInterface{
 			}
 			System.out.println();
 		}
+	}
+
+	@Override
+	public int[][] getMatrix() {
+		return map;
+	}
+
+	@Override
+	public ArrayList<CarInterface> getCarList() {
+		return cars;
+	}
+
+	@Override
+	public void setMatrix(int[][] original) {
+		for (int row = 0; row < Constants.MAPSIZE; row ++)
+			for (int col = 0; col < Constants.MAPSIZE; col ++)
+				map[row][col] = original[row][col];		
+	}
+
+	@Override
+	public void setCarList(ArrayList<CarInterface> original) {
+		for(CarInterface c : original) 
+			cars.add(c);		
 	}
 	
 }
