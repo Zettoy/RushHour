@@ -116,7 +116,7 @@ public class Map implements MapInterface{
 		} else if (direction == Constants.DOWN) {
 			int x = car.getPosition().getX();
 			int y = car.getPosition().getY() + car.getLength();
-			if (y < Constants.MAPSIZE - 1) return false;
+			if (y > Constants.MAPSIZE - 1) return false;
 			if (map[y][x] != 0) return false;
 		} else if (direction == Constants.LEFT) {
 			int x = car.getPosition().getX() - 1;

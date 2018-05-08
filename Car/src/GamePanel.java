@@ -1,10 +1,9 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-
-//TODO: add input for other cars
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
@@ -62,6 +61,21 @@ public class GamePanel extends JPanel {
 					g2d.fillRect(x, y, width, height);
 				}
 			}
+
+			Character carIdForDisplay = (char) (i + KeyEvent.VK_A);
+			
+			g.setFont(new Font("Arial", Font.BOLD, 25));
+			g.setColor(Color.WHITE);
+			g.drawString(carIdForDisplay + "", p.getX() * 70 + 95 , p.getY() * 70 + 105);
+			
 		}
+		
+		if (game.isWin()) return;
+		
+		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
+		Position selectedP = selectedCar.getPosition();
+		
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(selectedP.getX() * 70 + 95, selectedP.getY() * 70 + 85, 20, 20);
 	}
 }

@@ -13,24 +13,38 @@ public class KeyInput implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int direction = 0;
+		int carId = 0;
 		
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_UP:
-				direction = Constants.UP;
-				break;
-			case KeyEvent.VK_DOWN:
-				direction = Constants.DOWN;
-				break;
-			case KeyEvent.VK_LEFT:
-				direction = Constants.LEFT;
-				break;
-			case KeyEvent.VK_RIGHT:
-				direction = Constants.RIGHT;
-				break;
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			direction = Constants.UP;
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			direction = Constants.DOWN;
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			direction = Constants.LEFT;
+			
+		} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			direction = Constants.RIGHT;
+			
+		} else if (e.getKeyCode() >= KeyEvent.VK_A &&
+				   e.getKeyCode() <= KeyEvent.VK_Z) {
+			carId = e.getKeyCode() - KeyEvent.VK_A + 1;
+			
+		} else {
+			throw new IllegalStateException();
 		}
 		
-		game.getMap().moveCar(Constants.RED, direction);
+		if (carId == 0) {
+			game.moveCar(direction);
+		} else {
+			game.selectCar(carId);
+		}
 		gamePanel.repaint();
+		
+		if (game.isWin()) {
+			gamePanel.setFocusable(false);
+		}
 	}
 
 	@Override
