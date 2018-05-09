@@ -7,4 +7,5 @@ public interface GameInterface {
 	MapInterface getMap();
 	int getSelectedCar();
 	boolean isWin();
+	int getMovesMade();
 }

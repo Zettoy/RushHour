@@ -29,14 +29,15 @@ public class Map implements MapInterface{
 	}
 
 	@Override
-	public void moveCar(int carId, int direction) {
+	public boolean moveCar(int carId, int direction) {
 		CarInterface car = getCar(carId);
 		
-		if (!isMoveable(car, direction)) return;
+		if (!isMoveable(car, direction)) return false;
 		
 		removeFromMap(car);
 		car.move(direction);
 		putOnMap(car);
+		return true;
 		
 	}
 	
