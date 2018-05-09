@@ -39,8 +39,6 @@ public class GamePanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawString("Moves Made: "+ game.getMovesMade(),90 , 70);
 
-
-
 		int numCars = game.getMap().getNumCars();
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
@@ -76,7 +74,18 @@ public class GamePanel extends JPanel {
 			
 		}
 
-		if (game.isWin()) return;
+		if (game.isWin()) {
+			g.setColor(Color.BLACK);
+			g.fillRect(50 , 50, 500, 500);
+			g.setColor(Color.WHITE);
+			g.fillRect(75 , 75, 450, 450);
+
+			g.setColor(Color.BLACK);
+			g.setFont(new Font("Arial", Font.CENTER_BASELINE,30));
+			g.drawString("COMPLETED",200 , 200);
+			g.drawString("Moves Made: "+ game.getMovesMade(),175 , 300);
+			return;
+		}
 		
 		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
 		Position selectedP = selectedCar.getPosition();
