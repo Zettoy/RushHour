@@ -34,8 +34,16 @@ public class GamePanel extends JPanel {
 				g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
 			}
 		}
-		
+
+		g.setFont(new Font("Arial", Font.PLAIN,20));
+		g.setColor(Color.BLACK);
+		g.drawString("Moves Made: "+ game.getMovesMade(),90 , 70);
+
+
+
 		int numCars = game.getMap().getNumCars();
+		g.setFont(new Font("Arial", Font.BOLD, 25));
+		g.setColor(Color.WHITE);
 		for (int i = 0; i < numCars; i ++) {
 			CarInterface car = game.getMap().getCar(i + Constants.RED);
 			Position p = car.getPosition();
@@ -63,13 +71,11 @@ public class GamePanel extends JPanel {
 			}
 
 			Character carIdForDisplay = (char) (i + KeyEvent.VK_A);
-			
-			g.setFont(new Font("Arial", Font.BOLD, 25));
-			g.setColor(Color.WHITE);
+
 			g.drawString(carIdForDisplay + "", p.getX() * 70 + 95 , p.getY() * 70 + 105);
 			
 		}
-		
+
 		if (game.isWin()) return;
 		
 		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());

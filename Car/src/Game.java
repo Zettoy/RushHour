@@ -1,9 +1,9 @@
-
-public class Game implements GameInterface {	
+public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
 	private MapGeneratorInterface mapGenerator;
 	private int selectedCar;
+	private int movesMade;
 	
 	public Game () {
 
@@ -12,13 +12,17 @@ public class Game implements GameInterface {
 	@Override
 	public void gameStart() {
 		generateMap();
+		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = Constants.RED;
 	}
 	
 	@Override
 	public void moveCar(int direction) {
-		activeMap.moveCar(selectedCar, direction);
+		if(activeMap.moveCar(selectedCar, direction)) {
+			movesMade++;
+		}
+
 	}
 	
 	@Override
@@ -45,10 +49,15 @@ public class Game implements GameInterface {
 
 	@Override
 	public void gameRestart() {
+		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = Constants.RED;
 		
 	}
+
+	@Override
+	public int getMovesMade() { return movesMade;}
+
 	
 	private void generateMap() {
 		mapGenerator = new MapGenerator();
