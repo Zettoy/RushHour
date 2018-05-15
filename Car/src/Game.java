@@ -14,7 +14,7 @@ public class Game implements GameInterface {
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
-		selectedCar = Constants.RED;
+		selectedCar = 0;
 	}
 	
 	@Override
