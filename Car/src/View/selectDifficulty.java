@@ -4,25 +4,26 @@ package View;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
-public class MainMenu extends JPanel {
+public class selectDifficulty extends JPanel {
 	private MainFrame mainFrame;
 	
-	public MainMenu(MainFrame mainFrame) {
+	public selectDifficulty(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		//this.setLayout(new BorderLayout());
 	}
 	
 	public void startPanel() {
-		this.createButton("New Game", 300, 100);
-		this.createButton("Rules", 100, 200);
-		this.createButton("Leader Board", 100, 300);
-		this.createButton("Quit", 100, 400);
+		this.createButton("Easy", 300, 100);
+		this.createButton("Medium", 100, 200);
+		this.createButton("Hard", 100, 300);
+		this.createButton("Main Menu", 100, 400);
 	}
 	
 	private void createButton(String name, int x, int y) {

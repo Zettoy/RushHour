@@ -15,18 +15,27 @@ public class ButtonClickListener implements ActionListener {
 		String command = e.getActionCommand();
 		
 		if(command.equals("New Game")) {
-			
-		} else if(command.equals("Rules")) {
-			
-		} else if(command.equals("Leader Board")) {
-			
-		} else if(command.equals("Quit")) {
+			mainFrame.changePanel(mainFrame.getDifficulty());
+		} 
+		else if(command.equals("Rules")) {
+			mainFrame.changePanel(mainFrame.getRules());
+		} 
+		else if(command.equals("Leader Board")) {
+			mainFrame.changePanel(mainFrame.getLeaderBoard());
+		} 
+		else if(command.equals("Quit")) {
 			System.exit(0);
-		} else if(command.equals("Easy")) {
+		} 
+		else if(command.equals("Main Menu")) {
+			mainFrame.changePanel(mainFrame.getMainMenu());
+		}
+		else if(command.equals("Easy")) {
 			
-		} else if(command.equals("Medium")) {
+		} 
+		else if(command.equals("Medium")) {
 			
-		} else if(command.equals("Hard")) {
+		} 
+		else if(command.equals("Hard")) {
 			
 		}
 		

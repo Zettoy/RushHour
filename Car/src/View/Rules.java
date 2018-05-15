@@ -1,17 +1,19 @@
 package View;
 
+import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Rules extends JPanel {
 	MainFrame mainFrame;
 	
 	public Rules(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		this.startPanel();
 	}
 	
-	private void startPanel() {
+	public void startPanel() {
 		JButton button = new JButton("Main Menu");
 		button.setActionCommand("Main Menu");
 		button.addActionListener(new ButtonClickListener(mainFrame));
@@ -21,6 +23,6 @@ public class Rules extends JPanel {
 		//JPanel panel = new JPanel(new BorderLayout());
 		//panel.add(label, BorderLayout.CENTER);
 		//this.add(label, BorderLayout.NORTH);
-		//this.add(button, BorderLayout.SOUTH);
+		this.add(button, BorderLayout.SOUTH);
 	}
 }
