@@ -40,6 +40,7 @@ public class MouseDragDrop implements MouseMotionListener {
 			dy = 0;
 		}
 		gamePanel.repaint();
+		if (game.isWin()) game.selectCar(0);
 	}
 
 	@Override
