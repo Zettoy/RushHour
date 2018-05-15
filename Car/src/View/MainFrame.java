@@ -16,10 +16,12 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		mainMenu = new MainMenu(this);
+		((MainMenu) mainMenu).startPanel();
+		
 		currentPanel = mainMenu;
 	}
 	
-	public void changeScreen(JPanel panel) {
+	public void changePanel(JPanel panel) {
 			this.getContentPane().remove(this.getCurrentPanel());
 			this.getContentPane().add(panel, BorderLayout.CENTER);
 			this.setCurrentPanel(panel);
@@ -31,7 +33,10 @@ public class MainFrame extends JFrame {
 		this.setLayout(new BorderLayout());
 		this.setTitle("Rush Hour");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.changeScreen(this.getCurrentPanel());
+		//intialise main menu
+		this.getContentPane().add(mainMenu, BorderLayout.CENTER);
+		this.setCurrentPanel(mainMenu);
+		this.setVisible(true);
 	}
 	
 	public JPanel getCurrentPanel() {
