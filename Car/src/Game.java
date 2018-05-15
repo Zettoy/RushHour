@@ -51,7 +51,7 @@ public class Game implements GameInterface {
 	public void gameRestart() {
 		movesMade = 0;
 		activeMap = initMap.clone();
-		selectedCar = Constants.RED;
+		selectedCar = 0;
 		
 	}
 
