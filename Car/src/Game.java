@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
@@ -56,9 +60,10 @@ public class Game implements GameInterface {
 	}
 
 	@Override
-	public int getMovesMade() { return movesMade;}
+	public int getMovesMade() {
+		return movesMade;
+	}
 
-	
 	private void generateMap() {
 		mapGenerator = new MapGenerator();
 		mapGenerator.createMap();

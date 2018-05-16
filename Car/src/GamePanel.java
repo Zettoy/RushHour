@@ -1,19 +1,23 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private GameInterface game;
 	private ArrayList<CarComponent> cars;
+	private int time;
+	private Timer timer;
+	private JLabel movesLabel;
+	private JLabel timeLabel;
+	private JLabel completeLabel;
 	
 	private Point mousePoint;
 	
 	public GamePanel (GameInterface game) {
+		time = 0;
 		this.game = game;
 		this.cars = new ArrayList<>();
 		
@@ -23,6 +27,31 @@ public class GamePanel extends JPanel {
 		this.addMouseListener(new MousePress(game, this));
 		this.addMouseMotionListener(new MouseDragDrop(game, this));
 		this.setFocusable(true);
+
+		completeLabel = new JLabel("COMPLETE", JLabel.CENTER );
+		completeLabel.setBounds(175,150,250,80);
+		completeLabel.setForeground(Color.BLACK);
+		completeLabel.setFont(new Font("Arial", Font.BOLD,30));
+
+		timeLabel = new JLabel("Time: " +  time, JLabel.LEFT );
+		timer = new Timer(1000, actionEvent -> {
+            if(game.getMovesMade() != 0) {
+				time++;
+				timeLabel.setText("Time: " + time);
+			}
+        });
+		timer.start();
+		timeLabel.setBounds(370,25,250,80);
+		timeLabel.setForeground(Color.BLACK);
+		timeLabel.setFont(new Font("Arial", Font.PLAIN,20));
+		this.add(timeLabel);
+
+		movesLabel = new JLabel("Moves Made: " +  0, JLabel.LEFT );
+		movesLabel.setBounds(90,25,250,80);
+		movesLabel.setForeground(Color.BLACK);
+		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
+		this.add(movesLabel);
+
 		this.requestFocus();
 
 	}
@@ -53,9 +82,12 @@ public class GamePanel extends JPanel {
 			for (int j = 0; j < 6; j ++)
 				g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
 
-		g.setFont(new Font("Arial", Font.PLAIN,20));
-		g.setColor(Color.BLACK);
-		g.drawString("Moves Made: "+ game.getMovesMade(), 90 , 70);
+		movesLabel.setText("Moves Made: "+ game.getMovesMade());
+		if(game.getMovesMade() == 0) {
+			time = 0;
+			timeLabel.setText("Time: " + time);
+		}
+
 
 		int numCars = game.getMap().getNumCars();
 		g.setFont(new Font("Arial", Font.BOLD, 25));
@@ -112,11 +144,21 @@ public class GamePanel extends JPanel {
 			g.setColor(Color.WHITE);
 			g.fillRect(75 , 75, 450, 450);
 
-			g.setColor(Color.BLACK);
-			g.setFont(new Font("Arial", Font.CENTER_BASELINE,30));
-			g.drawString("COMPLETED",200 , 200);
-			g.drawString("Moves Made: "+ game.getMovesMade(),175 , 300);
-			return;
+			this.add(completeLabel);
+
+			timer.stop();
+			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			movesLabel.setLocation(175,250);
+			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			timeLabel.setLocation(175,300);
+
+		} else if (!timer.isRunning()) {
+				timer.restart();
+				movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+				movesLabel.setLocation(90,25);
+				timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+				timeLabel.setLocation(370,25);
+				this.remove(completeLabel);
 		}
 		
 		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
