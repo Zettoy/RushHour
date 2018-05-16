@@ -34,10 +34,9 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void changePanel(JPanel panel) {
-			this.getContentPane().remove(this.getCurrentPanel());
-			this.getContentPane().add(panel, BorderLayout.CENTER);
-			this.setCurrentPanel(panel);
-			this.setVisible(true);
+			this.setContentPane(panel);
+			this.invalidate();
+			this.validate();
 	}
 	
 	public void initialise() {
