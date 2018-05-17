@@ -1,6 +1,10 @@
 package Controller;
+import View.GameButtonListener;
+
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -12,6 +16,10 @@ public class GamePanel extends JPanel {
 	private JLabel movesLabel;
 	private JLabel timeLabel;
 	private JLabel completeLabel;
+	private JButton restart;
+	private JButton exit;
+	private JButton nextLevel;
+
 	
 	private Point mousePoint;
 	
@@ -28,16 +36,14 @@ public class GamePanel extends JPanel {
 		this.setFocusable(true);
 
 		completeLabel = new JLabel("COMPLETE", JLabel.CENTER );
-		completeLabel.setBounds(175,150,250,80);
+		completeLabel.setBounds(175,100,250,80);
 		completeLabel.setForeground(Color.BLACK);
 		completeLabel.setFont(new Font("Arial", Font.BOLD,30));
 
 		timeLabel = new JLabel("Time: " +  time, JLabel.LEFT );
-		timer = new Timer(1000, actionEvent -> {
-            if(game.getMovesMade() != 0) {
+		timer = new Timer(1, actionEvent -> {
 				time++;
-				timeLabel.setText("Time: " + time);
-			}
+				timeLabel.setText(("Time: " + new SimpleDateFormat("mm:ss:SSS").format(new Date(time))).substring(0,14));
         });
 		timer.start();
 		timeLabel.setBounds(370,25,250,80);
@@ -50,6 +56,12 @@ public class GamePanel extends JPanel {
 		movesLabel.setForeground(Color.BLACK);
 		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel);
+
+		nextLevel = createButton("Next Level", 225,275);
+		remove(nextLevel);
+		restart = createButton("Restart", 350, 500);
+		exit = createButton("Exit", 90, 500);
+
 
 		this.requestFocus();
 
@@ -82,10 +94,6 @@ public class GamePanel extends JPanel {
 				g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
 
 		movesLabel.setText("Moves Made: "+ game.getMovesMade());
-		if(game.getMovesMade() == 0) {
-			time = 0;
-			timeLabel.setText("Time: " + time);
-		}
 
 
 		int numCars = game.getMap().getNumCars();
@@ -147,17 +155,25 @@ public class GamePanel extends JPanel {
 
 			timer.stop();
 			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel.setLocation(175,250);
+			movesLabel.setLocation(175,150);
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel.setLocation(175,300);
+			timeLabel.setLocation(175,200);
+			add(nextLevel);
+			restart.setLocation(225,350);
+			exit.setLocation(225,425);
+
 
 		} else if (!timer.isRunning()) {
-				timer.restart();
-				movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
-				movesLabel.setLocation(90,25);
-				timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-				timeLabel.setLocation(370,25);
-				this.remove(completeLabel);
+			time = 0;
+			timer.restart();
+			movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			movesLabel.setLocation(90,25);
+			timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			timeLabel.setLocation(370,25);
+			remove(completeLabel);
+			remove(nextLevel);
+			restart.setLocation(350,500);
+			exit.setLocation(90,500);
 		}
 		
 		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
@@ -167,5 +183,28 @@ public class GamePanel extends JPanel {
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(selectedP.getX() * 70 + 95, selectedP.getY() * 70 + 85, 20, 20);
 		
+	}
+
+	private JButton createButton(String name, int x, int y) {
+		JButton button = new JButton(name);
+		//set images in background
+		Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
+		Image scaledImg = image.getScaledInstance(150, 50, Image.SCALE_SMOOTH);
+		ImageIcon icon = new ImageIcon(scaledImg);
+		button.setIcon(icon);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		//TODO: MAKE TRANSPARENT
+		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
+		button.setActionCommand(name);
+		button.setBounds(400, 100, 100, 40);
+		button.setBounds(x, y, 150, 50);
+		button.addActionListener(new GameButtonListener(game, this));
+		//add button to the panel
+		this.add(button);
+		return button;
+	}
+
+	public void restartTime() {
+		time = 0;
 	}
 }

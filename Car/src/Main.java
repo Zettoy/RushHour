@@ -8,7 +8,7 @@ class Main {
         EventQueue.invokeLater(() -> {
         	new PuzzleUI().start();
         });
-	} 
+	}
 	
 	//THIS IS FOR TESTING CLAIRE'S STUFF. ADD STUFF ABOVE BACK IN LATER
 
