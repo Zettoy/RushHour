@@ -3,8 +3,6 @@ package View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Controller.PuzzleUI;
-
 public class ButtonClickListener implements ActionListener {
 	private MainFrame mainFrame;
 	
