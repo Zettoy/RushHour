@@ -15,7 +15,6 @@ public class MainMenu extends JPanel {
 	
 	public MainMenu(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-		//this.setLayout(new BorderLayout());
 	}
 	
 	public void startPanel() {
