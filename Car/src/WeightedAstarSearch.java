@@ -24,11 +24,11 @@ public class WeightedAstarSearch implements StateSpaceSearch {
 		int numStatesExplored = 0;
 		while (!openSet.isEmpty()) {
 			State currentState = openSet.remove();
+			if (currentState.isGoal()) return currentState.getDistanceTravelled();
 			closedSet.add(currentState);
 			numStatesExplored++;
 			//System.out.println(numStatesExplored);
-			if (numStatesExplored > Constants.IMPOSSIBLE) return 0;
-			if (currentState.isGoal()) return currentState.getDistanceTravelled();
+			if (numStatesExplored > Constants.MAX_CONFIGURATIONS) return 0;
 			Collection<State> connectedStates = currentState.getConnectedStates();
 			for (State state: connectedStates) {
 				if (closedSet.contains(state)) continue;

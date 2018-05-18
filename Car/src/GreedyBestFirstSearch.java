@@ -28,7 +28,6 @@ public class GreedyBestFirstSearch implements StateSpaceSearch {
 			for (State state: connectedStates) {
 				if (closedSet.contains(state)) continue;
 				state.setDistanceToGoal(heuristic.calculate(state));
-				//System.out.println(state.getDistanceToGoal());
 				openSet.add(state);
 			}
 		}
