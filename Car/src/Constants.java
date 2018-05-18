@@ -15,9 +15,9 @@ public class Constants {
 	public static final int SHORT = 2;
 	public static final int LONG  = 3;
 	
-	public static final int EASY = 21;
-	public static final int INTERMEDIATE = 34;
-	public static final int HARD = 55;
+	public static final int EASY = 15;
+	public static final int INTERMEDIATE = 25;
+	public static final int HARD = 35;
 	
 	public static final int IMPOSSIBLE = 24000;
 }
