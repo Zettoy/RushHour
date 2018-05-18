@@ -10,7 +10,7 @@ public class UnblockCount implements SearchHeuristic {
 		int startingX = map.getCar(Constants.RED).getPosition().getX() + map.getCar(Constants.RED).getLength();
 		int movesToUnblock = 0;
 		while (startingX < Constants.MAPSIZE) {
-			movesToUnblock += getNumMovesToUnblock(map, 2, startingX, 2) + 1;
+			movesToUnblock += getNumMovesToUnblock(map, startingX, 2, 2);
 			startingX++;
 		}
 		return movesToUnblock;

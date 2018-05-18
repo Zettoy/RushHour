@@ -15,7 +15,7 @@ public class MapGenerator implements MapGeneratorInterface{
 			MapState initialState = new MapState(map, 0);
 			StateSpaceSearch algorithm = new WeightedAstarSearch(new UnblockCount());
 			movesToSolve = algorithm.findTotalDistanceToGoal(initialState);
-			System.out.println(movesToSolve);
+			//System.out.println(movesToSolve);
 		}
 	}
 	
