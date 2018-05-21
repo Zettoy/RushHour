@@ -9,4 +9,5 @@ public interface GameInterface {
 	int getSelectedCar();
 	boolean isWin();
 	int getMovesMade();
+	void nextLevel();
 }
