@@ -207,4 +207,8 @@ public class GamePanel extends JPanel {
 	public void restartTime() {
 		time = 0;
 	}
+	
+	public void nextLevel() {
+		cars.clear();
+	}
 }
