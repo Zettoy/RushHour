@@ -27,6 +27,7 @@ public class GameButtonListener implements ActionListener {
 
         } else if (command.equals("Next Level")) {
         	game.nextLevel();
+        	gamePanel.nextLevel();
         }
         
         gamePanel.repaint();
