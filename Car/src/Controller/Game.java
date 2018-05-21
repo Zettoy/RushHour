@@ -1,4 +1,8 @@
 package Controller;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
@@ -6,8 +10,11 @@ public class Game implements GameInterface {
 	private int selectedCar;
 	private int movesMade;
 	
-	public Game () {
+	private Queue<MapInterface> mapQueue;
 
+	
+	public Game () {
+		mapQueue = new LinkedList<>();
 	}
 	
 	@Override
@@ -16,6 +23,16 @@ public class Game implements GameInterface {
 		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = 0;
+		
+		new Thread() {
+			public void run() {
+				while (mapQueue.size() < 3) {
+					MapGeneratorInterface m = new MapGenerator();
+					m.createMap();
+					mapQueue.add(m.getMap());
+				}
+			}
+		}.start();
 	}
 	
 	@Override
@@ -24,6 +41,14 @@ public class Game implements GameInterface {
 			movesMade++;
 		}
 
+	}
+	
+	@Override
+	public void nextLevel() {
+		initMap = mapQueue.poll();
+		activeMap = initMap.clone();
+		movesMade = 0;
+		selectedCar = 0;
 	}
 	
 	@Override
