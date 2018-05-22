@@ -1,5 +1,6 @@
 package Controller;
 import java.util.Random;
+import Controller.Constants;
 
 public class MapGenerator implements MapGeneratorInterface{	
 	private Map map;
@@ -14,7 +15,7 @@ public class MapGenerator implements MapGeneratorInterface{
 			map = new Map();
 			generatePrelimMap();
 			MapState initialState = new MapState(map, 0);
-			StateSpaceSearch algorithm = new WeightedAstarSearch(new UnblockCount());
+			StateSpaceSearch algorithm = new BestFirstSearch(new UnblockCount());
 			movesToSolve = algorithm.findTotalDistanceToGoal(initialState);
 			//System.out.println(movesToSolve);
 		}
@@ -42,7 +43,7 @@ public class MapGenerator implements MapGeneratorInterface{
 				}
 			}
 			else if (orientation == Constants.VERTICAL) {
-				if (!isColumnFull(length, perpCoord, paraCoord)) {
+				if (carAboveCanBackOut(startingX, perpCoord, paraCoord) && !isColumnFull(length, perpCoord, paraCoord)) {
 					CarInterface car = new Car(Constants.RED + numCarsAdded, length, orientation, new Position(perpCoord, paraCoord));
 					carAdded = map.addCar(car);
 				}
@@ -78,9 +79,19 @@ public class MapGenerator implements MapGeneratorInterface{
 		}
 		return true;
 	}
+	
+	private boolean carAboveCanBackOut(int startingX, int x, int y) {
+		if (x < startingX + Constants.SHORT) return true;
+		for (int j = y; j >= 0; j--) {
+			if (map.getCarId(x, j) == 0) continue;
+			CarInterface car = map.getCar(map.getCarId(x, j));
+			if (car.getDirection() == Constants.VERTICAL && car.getLength() == Constants.LONG) return false;
+		}
+		return true;
+	}
 
 	private int getFailureThreshold () {
-		return 7;
+		return 8;
 	}
 	
 	@Override
