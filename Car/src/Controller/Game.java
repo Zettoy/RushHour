@@ -7,6 +7,7 @@ public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
 	private MapGeneratorInterface mapGenerator;
+	private LinkedList<Move> moves;
 	private int selectedCar;
 	private int movesMade;
 	
@@ -15,6 +16,7 @@ public class Game implements GameInterface {
 	
 	public Game () {
 		mapQueue = new LinkedList<>();
+		moves = new LinkedList<>();
 	}
 	
 	@Override
@@ -38,11 +40,13 @@ public class Game implements GameInterface {
 	@Override
 	public void moveCar(int direction) {
 		if(activeMap.moveCar(selectedCar, direction)) {
+			Move newMove = new Move(selectedCar, direction);
+			moves.add(newMove);
 			movesMade++;
 		}
 
 	}
-	
+		
 	@Override
 	public void nextLevel() {
 		initMap = mapQueue.poll();
@@ -54,6 +58,16 @@ public class Game implements GameInterface {
 	@Override
 	public void selectCar(int carId) {
 		selectedCar = carId;
+	}
+	
+	@Override
+	public void undo() {
+		if(moves.size() > 0) {
+			Move lastMove = moves.removeLast();
+			if(activeMap.moveCar(lastMove.getCarId(), lastMove.getOppDirection())) {
+				movesMade--;
+			}
+		}
 	}
 	
 	@Override
@@ -91,6 +105,7 @@ public class Game implements GameInterface {
 		mapGenerator.createMap();
 		initMap = mapGenerator.getMap();
 	}
+
 	
 	/* Example of using other map generators
 	private void generateMapHard() {

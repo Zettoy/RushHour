@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
 	private JLabel movesLabel;
 	private JLabel timeLabel;
 	private JLabel completeLabel;
+	private JButton undo;
 	private JButton restart;
 	private JButton exit;
 	private JButton nextLevel;
@@ -56,11 +57,12 @@ public class GamePanel extends JPanel {
 		movesLabel.setForeground(Color.BLACK);
 		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel);
-
+		
 		nextLevel = createButton("Next Level", 225,275);
 		remove(nextLevel);
-		restart = createButton("Restart", 350, 500);
-		exit = createButton("Exit", 90, 500);
+		undo = createButton("Undo", 230, 500);
+		restart = createButton("Restart", 390, 500);
+		exit = createButton("Exit", 70, 500);
 
 
 		this.requestFocus();
