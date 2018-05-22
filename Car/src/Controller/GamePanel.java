@@ -163,6 +163,7 @@ public class GamePanel extends JPanel {
 			add(nextLevel);
 			restart.setLocation(225,350);
 			exit.setLocation(225,425);
+			remove(undo);
 
 
 		} else if (!timer.isRunning()) {
@@ -174,8 +175,9 @@ public class GamePanel extends JPanel {
 			timeLabel.setLocation(370,25);
 			remove(completeLabel);
 			remove(nextLevel);
-			restart.setLocation(350,500);
-			exit.setLocation(90,500);
+			restart.setLocation(390,500);
+			undo.setLocation(230, 500);
+			exit.setLocation(70,500);
 		}
 		
 		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
