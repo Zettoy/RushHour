@@ -22,6 +22,7 @@ public class GameButtonListener implements ActionListener {
 
         if (command.equals("Restart")) {
             game.gameRestart();
+            gamePanel.restartTime();
             
         } else if (command.equals("Undo")) {
         	game.undo();
@@ -31,9 +32,9 @@ public class GameButtonListener implements ActionListener {
         } else if (command.equals("Next Level")) {
         	game.nextLevel();
         	gamePanel.nextLevel();
+            gamePanel.restartTime();
         } 
         
         gamePanel.repaint();
-        gamePanel.restartTime();
     }
 }
