@@ -21,6 +21,11 @@ public class GamePanel extends JPanel {
 	private JButton exit;
 	private JButton nextLevel;
 
+	private Image redCar;
+	private Image blueCarShortVertical;
+	private Image blueCarShortHorizontal;
+	private Image blueCarLongVertical;
+	private Image blueCarLongHorizontal;
 	
 	private Point mousePoint;
 	
@@ -64,6 +69,11 @@ public class GamePanel extends JPanel {
 		restart = createButton("Restart", 390, 500);
 		exit = createButton("Exit", 70, 500);
 
+		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
+		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
+		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
+		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
+		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
 
 		this.requestFocus();
 
@@ -121,8 +131,11 @@ public class GamePanel extends JPanel {
 			c.setStartY(y);
 			
 			if (car.isRedCar()) {
+				/*
 				g2d.setColor(Color.RED);
 				g2d.fillRect(x , y, 132, 62);
+				*/
+				g2d.drawImage(redCar, x, y, 132, 62, this);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
 				
@@ -132,14 +145,22 @@ public class GamePanel extends JPanel {
 				if (direction == Constants.HORIZONTAL) {
 					int width = 60 * length + 10 * (length - 1) + 2;
 					int height = 62;
-					g2d.fillRect(x, y, width, height);
+					Image carToDraw = null;
+					if (width > 180) carToDraw = blueCarLongHorizontal;
+					if (width < 180) carToDraw = blueCarShortHorizontal;
+					/*g2d.fillRect(x, y, width, height);*/
+					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 					
 				} else if (direction == Constants.VERTICAL) {
 					int width = 62;
 					int height = 60 * length + 10 * (length - 1) + 2;
-					g2d.fillRect(x, y, width, height);
+					Image carToDraw = null;
+					if (height > 180) carToDraw = blueCarLongVertical;
+					if (height < 180) carToDraw = blueCarShortVertical;
+					/*g2d.fillRect(x, y, width, height);*/
+					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 				}
@@ -179,13 +200,6 @@ public class GamePanel extends JPanel {
 			undo.setLocation(230, 500);
 			exit.setLocation(70,500);
 		}
-		
-		CarInterface selectedCar = game.getMap().getCar(game.getSelectedCar());
-		if (selectedCar == null) return;
-		Position selectedP = selectedCar.getPosition();
-		
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(selectedP.getX() * 70 + 95, selectedP.getY() * 70 + 85, 20, 20);
 		
 	}
 
