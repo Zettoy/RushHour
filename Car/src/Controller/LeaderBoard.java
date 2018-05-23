@@ -51,7 +51,7 @@ public class LeaderBoard {
     }
 
     private Score[] loadLeaderBoard() throws IOException {
-        String fileLocation = System.getProperty("user.dir") + "/LeaderBoard" + difficulty + ".txt";
+        String fileLocation = System.getProperty("user.dir") + "/COMP2511Project/LeaderBoard" + difficulty + ".txt";
         File file;
         file = new File(fileLocation);
         try (Scanner sc = new Scanner(file)) {
@@ -90,15 +90,13 @@ public class LeaderBoard {
             writer.close();
             return scores;
         } catch (ParseException e) {
-            System.out.println("AC");
             return null;
         }
     }
 
 
     public void saveScore() {
-        String fileLocation = System.getProperty("user.dir") + "/LeaderBoard" + difficulty + ".txt";
-        System.out.println(fileLocation);
+        String fileLocation = System.getProperty("user.dir") + "/COMP2511Project/LeaderBoard" + difficulty + ".txt";
         File file = new File(fileLocation);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));

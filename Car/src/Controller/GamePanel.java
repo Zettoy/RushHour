@@ -2,6 +2,7 @@ package Controller;
 import View.GameButtonListener;
 
 import java.awt.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -230,6 +231,10 @@ public class GamePanel extends JPanel {
 	}
 
 	public Date getTime() {
-		return new Date(time);
+		try {
+			return new SimpleDateFormat("mm:ss:SS").parse(new SimpleDateFormat("mm:ss:SS").format(new Date(time)));
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 }
