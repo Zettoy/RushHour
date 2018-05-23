@@ -69,11 +69,11 @@ public class GamePanel extends JPanel {
 		undo = createButton("Undo", 230, 500);
 		exit = createButton("Return", 70, 500);
 
-		redCar = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/red_car.png");
-		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_short_v.png");
-		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_short_h.png");
-		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_long_v.png");
-		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_long_h.png");
+		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
+		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
+		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
+		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
+		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
 
 		this.requestFocus();
 

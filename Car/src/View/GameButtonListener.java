@@ -44,6 +44,6 @@ public class GameButtonListener implements ActionListener {
     }
 
     public void setMainFrame(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+        GameButtonListener.mainFrame = mainFrame;
     }
 }
