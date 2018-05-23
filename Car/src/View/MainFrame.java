@@ -78,6 +78,8 @@ public class MainFrame extends JFrame {
 	}
 	
 	public JPanel getLeaderBoard() {
+		leaderBoard = new ViewLeaderBoard(this);
+		((ViewLeaderBoard) leaderBoard).startPanel();
 		return leaderBoard;
 	}
 	
