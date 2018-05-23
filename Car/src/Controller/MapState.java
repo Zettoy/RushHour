@@ -2,11 +2,11 @@ package Controller;
 import java.util.HashSet;
 
 public class MapState implements State {
-	private final Map map;
+	private final MapInterface map;
 	private final int movesMade;
 	private int movesRemaining;
 	
-	public MapState(Map map, int movesMade) {
+	public MapState(MapInterface map, int movesMade) {
 		this.map = map;
 		this.movesMade = movesMade;
 		this.movesRemaining = 0;
@@ -32,15 +32,15 @@ public class MapState implements State {
 		return movesRemaining;
 	}
 	
-	public Map getMap() {
+	public MapInterface getMap() {
 		return map;
 	}
 	
 	@Override
 	public HashSet<State> getConnectedStates() {
 		HashSet<State> connectedStates = new HashSet<State>();
-		HashSet<Map> adjMaps = map.getAdjacentMaps();
-		for (Map adjMap: adjMaps) connectedStates.add(new MapState(adjMap, movesMade + 1));
+		HashSet<MapInterface> adjMaps = map.getAdjacentMaps();
+		for (MapInterface adjMap: adjMaps) connectedStates.add(new MapState(adjMap, movesMade + 1));
 		return connectedStates;
 	}
 

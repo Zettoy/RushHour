@@ -1,3 +1,5 @@
+
+
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -13,8 +15,8 @@ public class BestFirstSearch implements StateSpaceSearch {
 	public int findTotalDistanceToGoal(State initialState) {
 		PriorityQueue<State> openSet = new PriorityQueue<State>(new Comparator<State>() {
 			public int compare(State a, State b) {
-				double aF = 0.25 * a.getDistanceTravelled() + a.getDistanceToGoal();
-				double bF = 0.25 * b.getDistanceTravelled() + b.getDistanceToGoal();
+				double aF = 0.15 * a.getDistanceTravelled() + a.getDistanceToGoal();
+				double bF = 0.15 * b.getDistanceTravelled() + b.getDistanceToGoal();
 				return (int) (aF - bF);
 			}
 		});
