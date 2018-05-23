@@ -53,7 +53,7 @@ public class LeaderBoard {
     }
 
     private Score[] loadLeaderBoard() throws IOException {
-        String fileLocation = System.getProperty("user.dir") + "/COMP2511Project/LeaderBoard" + difficulty + ".txt";
+        String fileLocation = "./LeaderBoard" + difficulty + ".txt";
         File file;
         file = new File(fileLocation);
         try (Scanner sc = new Scanner(file)) {
@@ -98,7 +98,7 @@ public class LeaderBoard {
 
 
     public void saveScore() {
-        String fileLocation = System.getProperty("user.dir") + "/COMP2511Project/LeaderBoard" + difficulty + ".txt";
+        String fileLocation = "./LeaderBoard" + difficulty + ".txt";
         File file = new File(fileLocation);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
