@@ -6,7 +6,7 @@ public class UnblockCount implements SearchHeuristic {
 	
 	public int calculate(State state) {
 		
-		Map map = ((MapState) state).getMap();
+		MapInterface map = ((MapState) state).getMap();
 		CarInterface redCar = map.getCar(Constants.RED);
 		int startingX = redCar.getPosition().getX() + redCar.getLength();
 		int movesToUnblock = Constants.MAPSIZE - startingX;
@@ -18,7 +18,7 @@ public class UnblockCount implements SearchHeuristic {
 		return movesToUnblock;
 	}
 	
-	int getNumMovesToUnblock(Map map, int x, int y, int iterations) {
+	public int getNumMovesToUnblock(MapInterface map, int x, int y, int iterations) {
 		
 		if (iterations == 0 || map.getCarId(x, y) == 0) return 0;
 		

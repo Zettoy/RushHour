@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -149,8 +150,40 @@ public class Map implements MapInterface{
 		return true;
 	}
 	
-	public HashSet<Map> getAdjacentMaps() {
-		HashSet<Map> adjMaps = new HashSet<Map>();
+	public boolean isRowFull(int length, int x, int y) {
+		for (int i = 0; i < Constants.MAPSIZE; i++) {
+			if (i < x || i >= x + length) {
+				if (map[y][i] == 0) return false;
+				CarInterface car = getCar(map[y][i]);
+				if (car.getDirection() == Constants.VERTICAL) return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isColumnFull(int length, int x, int y) {
+		for (int j = 0; j < Constants.MAPSIZE; j++) {
+			if (j < y || j >= y + length) {
+				if (map[j][x] == 0) return false;
+				CarInterface car = getCar(map[j][x]);
+				if (car.getDirection() == Constants.HORIZONTAL) return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean canCarAboveBackOut(int x, int y) {
+		for (int j = y; j >= 0; j--) {
+			if (map[j][x] == 0) continue;
+			CarInterface car = getCar(map[j][x]);
+			if (car.getDirection() == Constants.VERTICAL 
+			    && car.getLength() == Constants.LONG) return false;
+		}
+		return true;
+	}
+	
+	public HashSet<MapInterface> getAdjacentMaps() {
+		HashSet<MapInterface> adjMaps = new HashSet<MapInterface>();
 		for (CarInterface car: cars) {
 			if (isMoveable(car, Constants.UP)) {
 				Map adjMap = (Map) this.clone();
@@ -176,7 +209,6 @@ public class Map implements MapInterface{
 		return adjMaps;
 	}
 	
-	@Override
 	public int getCarId(int x, int y) {
 		return map[y][x];
 	}
