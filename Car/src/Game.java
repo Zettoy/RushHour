@@ -20,7 +20,7 @@ public class Game implements GameInterface {
 	
 	@Override
 	public void gameStart() {
-		mapGenerator = new MapGenerator(mapQueue, Constants.EASY);
+		mapGenerator = new MapGenerator(mapQueue, Constants.INTERMEDIATE);
 		new Thread(mapGenerator).start();
 		generateMap();
 		movesMade = 0;
@@ -63,9 +63,11 @@ public class Game implements GameInterface {
 	
 	@Override
 	public boolean isWin() {
-		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) return true;
-		
-		return false;
+		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override
