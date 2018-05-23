@@ -1,7 +1,7 @@
 package Controller;
 
 public interface GameInterface {
-	void gameStart();
+	void gameStart(int difficulty);
 	void moveCar(int direction);
 	void selectCar(int carId);
 	void undo();
@@ -11,4 +11,5 @@ public interface GameInterface {
 	boolean isWin();
 	int getMovesMade();
 	void nextLevel();
+	void quit();
 }

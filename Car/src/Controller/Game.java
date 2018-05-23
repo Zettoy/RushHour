@@ -9,6 +9,7 @@ public class Game implements GameInterface {
 	private LinkedList<Move> moves;
 	private int selectedCar;
 	private int movesMade;
+	private Thread t;
 	
 	private BoundedQueue<MapInterface> mapQueue;
 
@@ -19,9 +20,10 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
-	public void gameStart() {
-		mapGenerator = new MapGenerator(mapQueue, Constants.INTERMEDIATE);
-		new Thread(mapGenerator).start();
+	public void gameStart(int difficulty) {
+		mapGenerator = new MapGenerator(mapQueue, difficulty);
+		t = new Thread(mapGenerator);
+		t.start();
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
@@ -99,6 +101,12 @@ public class Game implements GameInterface {
 		} catch (InterruptedException e) {
 
 		}
+	}
+
+	@Override
+	public void quit() {
+		t.interrupt();
+		mapQueue = new BoundedQueue<MapInterface>(3);
 	}
 	
 	/* Example of using other map generators
