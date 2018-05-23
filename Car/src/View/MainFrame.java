@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 	private JPanel mainMenu;
 	private JPanel rules;
 	private JPanel difficulty;
-	private JPanel leaderBoard; //TODO
+	private JPanel leaderBoard;
 	private JPanel actualGame;
 	private JPanel currentPanel;
 	
@@ -29,7 +29,8 @@ public class MainFrame extends JFrame {
 		((Rules) rules).startPanel();
 		difficulty = new selectDifficulty(this);
 		((selectDifficulty) difficulty).startPanel();
-		//TODO: SET LEADERBOARD
+		leaderBoard = new ViewLeaderBoard(this);
+		((ViewLeaderBoard) leaderBoard).startPanel();
 		//SET ACTUAL GAME
 		game = new Game();
 		gamePanel = new GamePanel(game);

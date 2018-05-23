@@ -24,4 +24,14 @@ public class Score {
                 new SimpleDateFormat("mm:ss:SS").format(time) + ";" +
                 moves + ";";
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+
 }
