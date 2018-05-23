@@ -3,6 +3,8 @@ package View;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Controller.Constants;
+
 public class ButtonClickListener implements ActionListener {
 	private MainFrame mainFrame;
 	
@@ -32,17 +34,17 @@ public class ButtonClickListener implements ActionListener {
 		else if(command.equals("Easy")) {
 			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
-			mainFrame.getGame().gameStart();
+			mainFrame.getGame().gameStart(Constants.EASY);
 		} 
 		else if(command.equals("Medium")) {
 			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
-			mainFrame.getGame().gameStart();
+			mainFrame.getGame().gameStart(Constants.INTERMEDIATE);
 		} 
 		else if(command.equals("Hard")) {
 			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
-			mainFrame.getGame().gameStart();
+			mainFrame.getGame().gameStart(Constants.HARD);
 		}
 		
 	}

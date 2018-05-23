@@ -29,6 +29,7 @@ public class GameButtonListener implements ActionListener {
         	game.undo();
         	
         } else if (command.equals("Return")) {
+        	game.quit();
             gamePanel.removeAll();
             mainFrame.remove(gamePanel);
             mainFrame.changePanel(mainFrame.getMainMenu());

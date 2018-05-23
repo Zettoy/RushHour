@@ -9,6 +9,7 @@ public class Game implements GameInterface {
 	private LinkedList<Move> moves;
 	private int selectedCar;
 	private int movesMade;
+	private Thread t;
 	boolean scoreSaved;
 	LeaderBoard leaderBoard;
 	GamePanel panel;
@@ -23,10 +24,11 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
-	public void gameStart() {
+	public void gameStart(int difficulty) {
+		mapGenerator = new MapGenerator(mapQueue, difficulty);
+		t = new Thread(mapGenerator);
+		t.start();
 		scoreSaved = false;
-		mapGenerator = new MapGenerator(mapQueue, Constants.INTERMEDIATE);
-		new Thread(mapGenerator).start();
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
@@ -114,6 +116,12 @@ public class Game implements GameInterface {
 
 	public void setPanel(GamePanel panel) {
 		this.panel = panel;
+	}
+
+	@Override
+	public void quit() {
+		t.interrupt();
+		mapQueue = new BoundedQueue<MapInterface>(3);
 	}
 	
 	/* Example of using other map generators
