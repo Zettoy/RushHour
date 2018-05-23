@@ -67,7 +67,7 @@ public class GamePanel extends JPanel {
 		remove(nextLevel);
 		undo = createButton("Undo", 230, 500);
 		restart = createButton("Restart", 390, 500);
-		exit = createButton("Exit", 70, 500);
+		exit = createButton("Return", 70, 500);
 
 		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
 		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GameButtonListener implements ActionListener {
+    private static MainFrame mainFrame;
     private GameInterface game;
     private GamePanel gamePanel;
 
@@ -27,8 +28,11 @@ public class GameButtonListener implements ActionListener {
         } else if (command.equals("Undo")) {
         	game.undo();
         	
-        } else if (command.equals("Exit")) {
-
+        } else if (command.equals("Return")) {
+            gamePanel.removeAll();
+            mainFrame.remove(gamePanel);
+            mainFrame.changePanel(mainFrame.getMainMenu());
+            mainFrame.restartGame();
         } else if (command.equals("Next Level")) {
         	game.nextLevel();
         	gamePanel.nextLevel();
@@ -36,5 +40,9 @@ public class GameButtonListener implements ActionListener {
         } 
         
         gamePanel.repaint();
+    }
+
+    public void setMainFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
     }
 }

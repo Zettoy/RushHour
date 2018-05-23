@@ -34,7 +34,8 @@ public class MainFrame extends JFrame {
 		game = new Game();
 		gamePanel = new GamePanel(game);
 		actualGame = gamePanel;
-		
+		GameButtonListener gameButtonListener = new GameButtonListener(game, gamePanel);
+		gameButtonListener.setMainFrame(this);
 		currentPanel = mainMenu;
 	}
 	
@@ -84,5 +85,10 @@ public class MainFrame extends JFrame {
 
 	public JPanel getMainMenu() {
 		return mainMenu;
+	}
+
+	public void restartGame() {
+		gamePanel = new GamePanel(game);
+		actualGame = gamePanel;
 	}
 }
