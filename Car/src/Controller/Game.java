@@ -17,10 +17,10 @@ public class Game implements GameInterface {
 	private BoundedQueue<MapInterface> mapQueue;
 
 	
-	public Game (int difficulty) {
+	public Game () {
 		mapQueue = new BoundedQueue<MapInterface>(3);
 		moves = new LinkedList<>();
-		leaderBoard = new LeaderBoard(3, difficulty);
+
 	}
 	
 	@Override
@@ -33,6 +33,7 @@ public class Game implements GameInterface {
 		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = 0;
+		leaderBoard = new LeaderBoard(3, difficulty);
 	}
 	
 	@Override

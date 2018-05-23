@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
 		((selectDifficulty) difficulty).startPanel();
 		//TODO: SET LEADERBOARD
 		//SET ACTUAL GAME
-		game = new Game(1);
+		game = new Game();
 		gamePanel = new GamePanel(game);
 		actualGame = gamePanel;
 		game.setPanel(gamePanel);
