@@ -1,4 +1,3 @@
-
 import java.util.Random;
 import Controller.Constants;
 
@@ -71,14 +70,14 @@ public class MapGenerator implements MapGeneratorInterface, Runnable {
 			boolean carAdded = false;
 			
 			if (orientation == Constants.HORIZONTAL) {
-				if (perpCoord != 2 && !isRowFull(length, paraCoord, perpCoord)) {
+				if (perpCoord != 2 && !map.isRowFull(length, paraCoord, perpCoord)) {
 					CarInterface car = new Car(Constants.RED + numCarsAdded, length, orientation, new Position(paraCoord, perpCoord));
 					carAdded = map.addCar(car);
 				}
 			}
 			else if (orientation == Constants.VERTICAL) {
-				if ((!isRedCarPathBlocked(startingX, perpCoord) || canCarAboveBackOut(perpCoord, paraCoord)) && 
-					 !isColumnFull(length, perpCoord, paraCoord)) {
+				if ((perpCoord < startingX + Constants.SHORT || map.canCarAboveBackOut(perpCoord, paraCoord)) && 
+					 !map.isColumnFull(length, perpCoord, paraCoord)) {
 					CarInterface car = new Car(Constants.RED + numCarsAdded, length, orientation, new Position(perpCoord, paraCoord));
 					carAdded = map.addCar(car);
 				}
@@ -91,42 +90,5 @@ public class MapGenerator implements MapGeneratorInterface, Runnable {
 				numFailuresInARow++;
 			}
 		}
-	}
-	
-	private boolean isRowFull(int length, int x, int y) {
-		for (int i = 0; i < Constants.MAPSIZE; i++) {
-			if (i < x || i >= x + length) {
-				if (map.getCarId(i, y) == 0) return false;
-				CarInterface car = map.getCar(map.getCarId(i, y));
-				if (car.getDirection() == Constants.VERTICAL) return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean isColumnFull(int length, int x, int y) {
-		for (int j = 0; j < Constants.MAPSIZE; j++) {
-			if (j < y || j >= y + length) {
-				if (map.getCarId(x, j) == 0) return false;
-				CarInterface car = map.getCar(map.getCarId(x, j));
-				if (car.getDirection() == Constants.HORIZONTAL) return false;
-			}
-		}
-		return true;
-	}
-	
-	private boolean isRedCarPathBlocked(int startingX, int x) {
-		if (x < startingX + Constants.SHORT) return false;
-		return true;
-	}
-	
-	private boolean canCarAboveBackOut(int x, int y) {
-		for (int j = y; j >= 0; j--) {
-			if (map.getCarId(x, j) == 0) continue;
-			CarInterface car = map.getCar(map.getCarId(x, j));
-			if (car.getDirection() == Constants.VERTICAL 
-			    && car.getLength() == Constants.LONG) return false;
-		}
-		return true;
 	}
 }
