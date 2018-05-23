@@ -20,7 +20,7 @@ public class Game implements GameInterface {
 	
 	@Override
 	public void gameStart() {
-		mapGenerator = new MapGenerator(mapQueue, Constants.EASY);
+		mapGenerator = new MapGenerator(mapQueue, Constants.INTERMEDIATE);
 		new Thread(mapGenerator).start();
 		generateMap();
 		movesMade = 0;
