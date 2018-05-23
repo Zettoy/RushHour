@@ -31,9 +31,10 @@ public class MainFrame extends JFrame {
 		((selectDifficulty) difficulty).startPanel();
 		//TODO: SET LEADERBOARD
 		//SET ACTUAL GAME
-		game = new Game();
+		game = new Game(1);
 		gamePanel = new GamePanel(game);
 		actualGame = gamePanel;
+		game.setPanel(gamePanel);
 		GameButtonListener gameButtonListener = new GameButtonListener(game, gamePanel);
 		gameButtonListener.setMainFrame(this);
 		currentPanel = mainMenu;

@@ -17,7 +17,7 @@ public class GamePanel extends JPanel {
 	private JLabel timeLabel;
 	private JLabel completeLabel;
 	private JButton undo;
-	private JButton restart;
+	//private JButton restart;
 	private JButton exit;
 	private JButton nextLevel;
 
@@ -66,14 +66,13 @@ public class GamePanel extends JPanel {
 		nextLevel = createButton("Next Level", 225,275);
 		remove(nextLevel);
 		undo = createButton("Undo", 230, 500);
-		restart = createButton("Restart", 390, 500);
 		exit = createButton("Return", 70, 500);
 
-		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
-		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
-		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
-		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
-		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
+		redCar = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/red_car.png");
+		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_short_v.png");
+		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_short_h.png");
+		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_long_v.png");
+		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage(System.getProperty("user.dir") + "/COMP2511Project/Car/pics/blue_car_long_h.png");
 
 		this.requestFocus();
 
@@ -182,7 +181,7 @@ public class GamePanel extends JPanel {
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			timeLabel.setLocation(175,200);
 			add(nextLevel);
-			restart.setLocation(225,350);
+			//restart.setLocation(225,350);
 			exit.setLocation(225,425);
 			remove(undo);
 
@@ -196,7 +195,7 @@ public class GamePanel extends JPanel {
 			timeLabel.setLocation(370,25);
 			remove(completeLabel);
 			remove(nextLevel);
-			restart.setLocation(390,500);
+			//restart.setLocation(390,500);
 			undo.setLocation(230, 500);
 			exit.setLocation(70,500);
 		}
@@ -228,5 +227,9 @@ public class GamePanel extends JPanel {
 	
 	public void nextLevel() {
 		cars.clear();
+	}
+
+	public Date getTime() {
+		return new Date(time);
 	}
 }

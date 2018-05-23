@@ -7,7 +7,7 @@ public class PuzzleUI extends JFrame{
 	private GamePanel gamePanel;
 	
 	public PuzzleUI() {
-		game = new Game();
+		game = new Game(1);
 		gamePanel = new GamePanel(game);
 		
 		this.setSize(600, 600);

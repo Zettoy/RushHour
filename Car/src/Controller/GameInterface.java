@@ -11,4 +11,5 @@ public interface GameInterface {
 	boolean isWin();
 	int getMovesMade();
 	void nextLevel();
+	void setPanel(GamePanel panel);
 }
