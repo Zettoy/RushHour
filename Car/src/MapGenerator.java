@@ -1,35 +1,68 @@
 
 import java.util.Random;
-
 import Controller.Constants;
 
-public class MapGenerator implements MapGeneratorInterface{	
+public class MapGenerator implements MapGeneratorInterface, Runnable {	
+
 	private Map map;
+	private BoundedQueue<MapInterface> mapQueue;
+	private int difficulty;
+	private static final int FAILURE_THRESHOLD = 8;
 	
-	public MapGenerator() {
-		map = new Map();
+	public MapGenerator(BoundedQueue<MapInterface> mapQueue, int difficulty) {
+		this.mapQueue = mapQueue;
+		this.difficulty = difficulty;
 	}
 	
-	public void createMap() {
+	public void run() {
+		try {
+			while (!Thread.currentThread().isInterrupted()) {
+				createMap();
+				mapQueue.add(map.clone());
+			}
+		}
+		catch (InterruptedException exception) {
+		}
+	}
+	
+	private void createMap() {
+		int minMovesAllowed = Constants.EASY;
+		int maxMovesAllowed = Constants.IMPOSSIBLE;
+		switch(difficulty) {
+			case Constants.EASY:
+				minMovesAllowed = Constants.EASY;
+				maxMovesAllowed = Constants.INTERMEDIATE;
+				break;
+			case Constants.INTERMEDIATE:
+				minMovesAllowed = Constants.INTERMEDIATE;
+				maxMovesAllowed = Constants.HARD;
+				break;
+			case Constants.HARD:
+				minMovesAllowed = Constants.HARD;
+				maxMovesAllowed = Constants.IMPOSSIBLE;
+		}
 		int movesToSolve = 0;
-		while (movesToSolve < Constants.EASY || movesToSolve > Constants.INTERMEDIATE) {
+		while (movesToSolve < minMovesAllowed || movesToSolve > maxMovesAllowed) {
 			map = new Map();
 			generatePrelimMap();
 			MapState initialState = new MapState(map, 0);
 			StateSpaceSearch algorithm = new BestFirstSearch(new UnblockCount());
 			movesToSolve = algorithm.findTotalDistanceToGoal(initialState);
-			//System.out.println(movesToSolve);
 		}
 	}
 	
 	private void generatePrelimMap() {
+		
 		Random random = new Random();
+		
+		int numCarsAdded = 0;
 		int startingX = random.nextInt(Constants.MAPSIZE - Constants.SHORT);
 		CarInterface redCar = new Car(Constants.RED, Constants.SHORT, Constants.HORIZONTAL, new Position(startingX, 2));
 		map.addCar(redCar);
-		int numCarsAdded = 1;
+		numCarsAdded++;
+		
 		int numFailuresInARow = 0;
-		while (numFailuresInARow < getFailureThreshold()) {
+		while (numFailuresInARow < FAILURE_THRESHOLD) {
 			
 			int length = random.nextInt(2) == 0 ? Constants.SHORT : Constants.LONG;
 			int paraCoord = random.nextInt(Constants.MAPSIZE - length + 1);
@@ -44,7 +77,8 @@ public class MapGenerator implements MapGeneratorInterface{
 				}
 			}
 			else if (orientation == Constants.VERTICAL) {
-				if (carAboveCanBackOut(startingX, perpCoord, paraCoord) && !isColumnFull(length, perpCoord, paraCoord)) {
+				if ((!isRedCarPathBlocked(startingX, perpCoord) || canCarAboveBackOut(perpCoord, paraCoord)) && 
+					 !isColumnFull(length, perpCoord, paraCoord)) {
 					CarInterface car = new Car(Constants.RED + numCarsAdded, length, orientation, new Position(perpCoord, paraCoord));
 					carAdded = map.addCar(car);
 				}
@@ -81,22 +115,18 @@ public class MapGenerator implements MapGeneratorInterface{
 		return true;
 	}
 	
-	private boolean carAboveCanBackOut(int startingX, int x, int y) {
-		if (x < startingX + Constants.SHORT) return true;
+	private boolean isRedCarPathBlocked(int startingX, int x) {
+		if (x < startingX + Constants.SHORT) return false;
+		return true;
+	}
+	
+	private boolean canCarAboveBackOut(int x, int y) {
 		for (int j = y; j >= 0; j--) {
 			if (map.getCarId(x, j) == 0) continue;
 			CarInterface car = map.getCar(map.getCarId(x, j));
-			if (car.getDirection() == Constants.VERTICAL && car.getLength() == Constants.LONG) return false;
+			if (car.getDirection() == Constants.VERTICAL 
+			    && car.getLength() == Constants.LONG) return false;
 		}
 		return true;
-	}
-
-	private int getFailureThreshold () {
-		return 8;
-	}
-	
-	@Override
-	public MapInterface getMap() {
-		return map;
 	}
 }

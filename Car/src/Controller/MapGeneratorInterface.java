@@ -1,6 +1,4 @@
 package Controller;
 
-public interface MapGeneratorInterface {
-	void createMap();
-	MapInterface getMap();
+public interface MapGeneratorInterface extends Runnable {
 }

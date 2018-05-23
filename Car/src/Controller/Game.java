@@ -1,7 +1,6 @@
 package Controller;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Game implements GameInterface {
 	private MapInterface activeMap;
@@ -11,30 +10,22 @@ public class Game implements GameInterface {
 	private int selectedCar;
 	private int movesMade;
 	
-	private Queue<MapInterface> mapQueue;
+	private BoundedQueue<MapInterface> mapQueue;
 
 	
 	public Game () {
-		mapQueue = new LinkedList<>();
+		mapQueue = new BoundedQueue<MapInterface>(3);
 		moves = new LinkedList<>();
 	}
 	
 	@Override
 	public void gameStart() {
+		mapGenerator = new MapGenerator(mapQueue, Constants.EASY);
+		new Thread(mapGenerator).start();
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = 0;
-		
-		new Thread() {
-			public void run() {
-				while (mapQueue.size() < 3) {
-					MapGeneratorInterface m = new MapGenerator();
-					m.createMap();
-					mapQueue.add(m.getMap());
-				}
-			}
-		}.start();
 	}
 	
 	@Override
@@ -49,7 +40,7 @@ public class Game implements GameInterface {
 		
 	@Override
 	public void nextLevel() {
-		initMap = mapQueue.poll();
+		generateMap();
 		activeMap = initMap.clone();
 		movesMade = 0;
 		selectedCar = 0;
@@ -101,11 +92,12 @@ public class Game implements GameInterface {
 	}
 
 	private void generateMap() {
-		mapGenerator = new MapGenerator();
-		mapGenerator.createMap();
-		initMap = mapGenerator.getMap();
-	}
+		try {
+			initMap = mapQueue.remove();
+		} catch (InterruptedException e) {
 
+		}
+	}
 	
 	/* Example of using other map generators
 	private void generateMapHard() {

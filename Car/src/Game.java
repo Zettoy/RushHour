@@ -1,16 +1,27 @@
+
+
+import java.util.LinkedList;
+
 public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
 	private MapGeneratorInterface mapGenerator;
+	private LinkedList<Move> moves;
 	private int selectedCar;
 	private int movesMade;
 	
-	public Game () {
+	private BoundedQueue<MapInterface> mapQueue;
 
+	
+	public Game () {
+		mapQueue = new BoundedQueue<MapInterface>(3);
+		moves = new LinkedList<>();
 	}
 	
 	@Override
 	public void gameStart() {
+		mapGenerator = new MapGenerator(mapQueue, Constants.EASY);
+		new Thread(mapGenerator).start();
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
@@ -20,14 +31,34 @@ public class Game implements GameInterface {
 	@Override
 	public void moveCar(int direction) {
 		if(activeMap.moveCar(selectedCar, direction)) {
+			Move newMove = new Move(selectedCar, direction);
+			moves.add(newMove);
 			movesMade++;
 		}
 
+	}
+		
+	@Override
+	public void nextLevel() {
+		generateMap();
+		activeMap = initMap.clone();
+		movesMade = 0;
+		selectedCar = 0;
 	}
 	
 	@Override
 	public void selectCar(int carId) {
 		selectedCar = carId;
+	}
+	
+	@Override
+	public void undo() {
+		if(moves.size() > 0) {
+			Move lastMove = moves.removeLast();
+			if(activeMap.moveCar(lastMove.getCarId(), lastMove.getOppDirection())) {
+				movesMade--;
+			}
+		}
 	}
 	
 	@Override
@@ -61,9 +92,11 @@ public class Game implements GameInterface {
 	}
 
 	private void generateMap() {
-		mapGenerator = new MapGenerator();
-		mapGenerator.createMap();
-		initMap = mapGenerator.getMap();
+		try {
+			initMap = mapQueue.remove();
+		} catch (InterruptedException e) {
+
+		}
 	}
 	
 	/* Example of using other map generators
