@@ -21,6 +21,8 @@ public class Game implements GameInterface {
 	private BoundedQueue<MapInterface> mapQueue;
 
 	private int level;
+	private int scorePosition;
+	private int difficulty;
 	
 	public Game () {
 		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
@@ -40,6 +42,7 @@ public class Game implements GameInterface {
 		activeMap = initMap.clone();
 		selectedCar = 0;
 		leaderBoard = new LeaderBoard(3, difficulty);
+		this.difficulty = difficulty;
 	}
 	
 	@Override
@@ -57,6 +60,9 @@ public class Game implements GameInterface {
 		if(leaderBoardShown) {
 			inGameLeaderBoard.removeLeaderBoard();
 			leaderBoardShown = false;
+		}
+		if(!scoreSaved) {
+			leaderBoard = new LeaderBoard(3, difficulty);
 		}
 		scoreSaved = false;
 		generateMap();
@@ -84,9 +90,9 @@ public class Game implements GameInterface {
 	public boolean isWin() {
 		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) {
 			if(!leaderBoardShown) {
-				int position = leaderBoard.addScore("You", panel.getTime(), movesMade);
+				scorePosition = leaderBoard.addScore("You", panel.getTime(), movesMade);
 				Score[] scores = leaderBoard.getScores();
-				inGameLeaderBoard.showScores(scores, position);
+				inGameLeaderBoard.showScores(this, panel, scores, scorePosition);
 				leaderBoardShown = true;
 			}
 			return true;
@@ -117,6 +123,7 @@ public class Game implements GameInterface {
 		if(leaderBoardShown) {
 			inGameLeaderBoard.removeLeaderBoard();
 			leaderBoardShown = false;
+			scoreSaved = false;
 		}
 		movesMade = 0;
 		activeMap = initMap.clone();
@@ -138,9 +145,20 @@ public class Game implements GameInterface {
 		}
 	}
 
+	public void saveScore() {
+		String name = inGameLeaderBoard.getName();
+		if(name != null) {
+			leaderBoard.setName(name, scorePosition);
+			inGameLeaderBoard.removeLeaderBoard();
+			Score[] scores = leaderBoard.getScores();
+			inGameLeaderBoard.showScores(this, panel, scores, 0);
+			scoreSaved = true;
+		}
+	}
+
 	public void setPanel(GamePanel panel) {
 		this.panel = panel;
-		inGameLeaderBoard = new InGameLeaderBoard(this, panel);
+		inGameLeaderBoard = new InGameLeaderBoard();
 	}
 
 	@Override

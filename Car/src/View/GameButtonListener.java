@@ -42,6 +42,8 @@ public class GameButtonListener implements ActionListener {
         	gamePanel.pause();
         } else if (command.equals("Play")) {
         	gamePanel.unpause();
+        } else if (command.equals("Submit")) {
+            game.saveScore();
         }
         
         gamePanel.repaint();

@@ -15,4 +15,5 @@ public interface GameInterface {
 	void quit();
 	void setPanel(GamePanel panel);
 	int getLevel();
+	void saveScore();
 }

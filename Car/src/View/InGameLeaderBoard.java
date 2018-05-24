@@ -26,15 +26,15 @@ public class InGameLeaderBoard{
     private JLabel name;
 
 
-    public InGameLeaderBoard(GameInterface game, GamePanel panel){
-        nameField = new JTextField();
+    public InGameLeaderBoard(){
+        nameField = new JTextField(10);
         nameField.setBounds(225, 345,150, 30);
-        submit = createPlainButton("Submit",400,345);
-        this.game = game;
-        this.panel = panel;
     }
 
-    public void showScores(Score[] scores, int position){
+    public void showScores(GameInterface game, GamePanel panel, Score[] scores, int position){
+        this.game = game;
+        this.panel = panel;
+        submit = createPlainButton("Submit",400,345);
         leaderBoardLabel = new JLabel("Leader Board");
         leaderBoardLabel.setForeground(Color.BLACK);
         leaderBoardLabel.setBounds(225,215, 150, 30);
@@ -47,20 +47,28 @@ public class InGameLeaderBoard{
         score2TimeLabel = addLabel("Time: " + new SimpleDateFormat("mm:ss:SS").format(scores[1].getTime()), 350, 245+20, position - 2);
         score3NameLabel = addLabel("3. Name: " + scores[2].getName(), 125,245+20*2, position - 3);
         score3TimeLabel = addLabel("Time: " + new SimpleDateFormat("mm:ss:SS").format(scores[2].getTime()), 350, 245+20*2, position - 3);
-
+        highScoreLabel = new JLabel("New High Score");
+        highScoreLabel.setForeground(Color.BLACK);
+        highScoreLabel.setBounds(225,310, 150, 30);
+        highScoreLabel.setFont(new Font("Arial", Font.CENTER_BASELINE,16));
+        panel.add(highScoreLabel);
+        highScoreLabel.setVisible(false);
+        name = new JLabel("Name: ");
+        name.setForeground(Color.BLACK);
+        name.setBounds(150,350, 100, 20);
+        name.setFont(new Font("Arial", Font.PLAIN,16));
+        panel.add(name);
+        name.setVisible(false);
+        panel.add(nameField);
+        nameField.setVisible(false);
+        panel.add(submit);
+        submit.setVisible(false);
         if(position != 0) {
-            highScoreLabel = new JLabel("New High Score");
-            highScoreLabel.setForeground(Color.BLACK);
-            highScoreLabel.setBounds(225,310, 150, 30);
-            highScoreLabel.setFont(new Font("Arial", Font.CENTER_BASELINE,16));
-            panel.add(highScoreLabel);
-            name = new JLabel("Name: ");
-            name.setForeground(Color.BLACK);
-            name.setBounds(150,350, 100, 20);
-            name.setFont(new Font("Arial", Font.PLAIN,16));
-            panel.add(name);
-            panel.add(nameField);
-            panel.add(submit);
+            highScoreLabel.setVisible(true);
+            submit.setVisible(true);
+            nameField.setVisible(true);
+            name.setVisible(true);
+
         }
     }
 
@@ -100,5 +108,14 @@ public class InGameLeaderBoard{
         }
         panel.add(label);
         return label;
+    }
+
+    public String getName() {
+        if(nameField.getText() == null) {
+            nameField.setBackground(Color.RED);
+            return null;
+        } else {
+            return nameField.getText();
+        }
     }
 }

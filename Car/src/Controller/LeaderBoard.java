@@ -92,6 +92,10 @@ public class LeaderBoard {
         }
     }
 
+    public void setName(String name, int position) {
+        scores[position - 1].setName(name);
+        saveScore();
+    }
 
     public void saveScore() {
         String fileLocation = "./LeaderBoard" + difficulty + ".txt";

@@ -222,9 +222,9 @@ public class GamePanel extends JPanel {
 
 			timer.stop();
 			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel.setLocation(175,95);
+			movesLabel.setLocation(175,110);
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel.setLocation(175,125);
+			timeLabel.setLocation(175,150);
 			if (game.isOver()) {
 				completeLabel.setText("GAME OVER");
 				return;
@@ -277,7 +277,7 @@ public class GamePanel extends JPanel {
 		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
 		button.setActionCommand(name);
 		button.setBounds(400, 100, 100, 40);
-		button.setBounds(x, y, 125, 50);
+		button.setBounds(x, y, 150, 50);
 		button.addActionListener(new GameButtonListener(game, this));
 		//add button to the panel
 		this.add(button);

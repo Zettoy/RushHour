@@ -33,5 +33,7 @@ public class Score {
         return moves;
     }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
 }
