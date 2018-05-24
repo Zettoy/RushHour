@@ -1,5 +1,7 @@
 package Controller;
 
+import View.InGameLeaderBoard;
+
 import java.util.LinkedList;
 
 public class Game implements GameInterface {
@@ -10,9 +12,11 @@ public class Game implements GameInterface {
 	private int selectedCar;
 	private int movesMade;
 	private Thread t;
+	boolean leaderBoardShown;
 	boolean scoreSaved;
-	LeaderBoard leaderBoard;
-	GamePanel panel;
+	private LeaderBoard leaderBoard;
+	private GamePanel panel;
+	private InGameLeaderBoard inGameLeaderBoard;
 	
 	private BoundedQueue<MapInterface> mapQueue;
 
@@ -29,6 +33,7 @@ public class Game implements GameInterface {
 		mapGenerator = new MapGenerator(mapQueue, difficulty);
 		t = new Thread(mapGenerator);
 		t.start();
+		leaderBoardShown = false;
 		scoreSaved = false;
 		generateMap();
 		movesMade = 0;
@@ -49,6 +54,10 @@ public class Game implements GameInterface {
 		
 	@Override
 	public void nextLevel() {
+		if(leaderBoardShown) {
+			inGameLeaderBoard.removeLeaderBoard();
+			leaderBoardShown = false;
+		}
 		scoreSaved = false;
 		generateMap();
 		activeMap = initMap.clone();
@@ -74,9 +83,11 @@ public class Game implements GameInterface {
 	@Override
 	public boolean isWin() {
 		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) {
-			if(!scoreSaved) {
-				leaderBoard.addScore("test", panel.getTime(), movesMade);
-				scoreSaved = true;
+			if(!leaderBoardShown) {
+				int position = leaderBoard.addScore("You", panel.getTime(), movesMade);
+				Score[] scores = leaderBoard.getScores();
+				inGameLeaderBoard.showScores(scores, position);
+				leaderBoardShown = true;
 			}
 			return true;
 		} else {
@@ -103,7 +114,10 @@ public class Game implements GameInterface {
 
 	@Override
 	public void gameRestart() {
-		scoreSaved = false;
+		if(leaderBoardShown) {
+			inGameLeaderBoard.removeLeaderBoard();
+			leaderBoardShown = false;
+		}
 		movesMade = 0;
 		activeMap = initMap.clone();
 		selectedCar = 0;
@@ -126,6 +140,7 @@ public class Game implements GameInterface {
 
 	public void setPanel(GamePanel panel) {
 		this.panel = panel;
+		inGameLeaderBoard = new InGameLeaderBoard(this, panel);
 	}
 
 	@Override

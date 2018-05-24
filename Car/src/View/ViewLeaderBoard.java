@@ -49,7 +49,7 @@ public class ViewLeaderBoard extends JPanel{
         diffLabel.setFont(new Font("Arial", Font.BOLD,20));
         this.add(diffLabel);
         for(int i = 0; i < 3; i++) {
-            nameLabel = new JLabel("Name: " + scores[i].getName());
+            nameLabel = new JLabel((i+1) + ". Name: " + scores[i].getName());
             nameLabel.setBounds(125,100+20*i + 115*number,225, 25);
             nameLabel.setForeground(Color.BLACK);
             nameLabel.setFont(new Font("Arial", Font.PLAIN,16));

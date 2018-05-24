@@ -22,21 +22,21 @@ public class LeaderBoard {
 
     }
 
-    public boolean addScore(String name, Date time, int movesMade) {
+    public int addScore(String name, Date time, int movesMade) {
         for( int i = maxPositions - 1; i >= 0; i--) {
             if(!time.before(scores[i].getTime())) {
                 if(i == maxPositions -1) {
-                    return false;
+                    return 0;
                 } else {
                     Score newScore = new Score(name, time, movesMade);
                     addScorePos(newScore, i + 2);
-                    return true;
+                    return i+2;
                 }
             }
         }
         Score newScore = new Score(name, time, movesMade);
         addScorePos(newScore, 1);
-        return true;
+        return 1;
     }
 
     private void addScorePos(Score newScore, int position) {
@@ -45,7 +45,6 @@ public class LeaderBoard {
 
         }
         scores[position - 1] = newScore;
-        saveScore();
     }
 
     private Score[] loadLeaderBoard() throws IOException {

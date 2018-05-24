@@ -1,5 +1,6 @@
 package Controller;
 import View.GameButtonListener;
+import View.InGameLeaderBoard;
 
 import java.awt.*;
 import java.text.ParseException;
@@ -43,7 +44,7 @@ public class GamePanel extends JPanel {
 		this.setFocusable(true);
 
 		completeLabel = new JLabel("COMPLETE", JLabel.CENTER );
-		completeLabel.setBounds(175,100,250,80);
+		completeLabel.setBounds(175,65,250,80);
 		completeLabel.setForeground(Color.BLACK);
 		completeLabel.setFont(new Font("Arial", Font.BOLD,30));
 
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel {
 		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel);
 		
-		nextLevel = createButton("Next Level", 225,275);
+		nextLevel = createButton("Next Level", 225,395);
 		remove(nextLevel);
 		undo = createButton("Undo", 350, 500);
 		exit = createButton("Return", 90, 500);
@@ -174,20 +175,17 @@ public class GamePanel extends JPanel {
 
 			timer.stop();
 			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel.setLocation(175,150);
+			movesLabel.setLocation(175,95);
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel.setLocation(175,200);
-			
-			exit.setLocation(225,425);
-			remove(undo);
+			timeLabel.setLocation(175,125);
 			if (game.isOver()) {
 				completeLabel.setText("GAME OVER");
 				return;
 			}
 			add(nextLevel);
 			//restart.setLocation(225,350);
-
-
+			exit.setLocation(225,460);
+			remove(undo);
 		} else if (!timer.isRunning()) {
 			time = 0;
 			timer.restart();
@@ -204,6 +202,8 @@ public class GamePanel extends JPanel {
 		}
 		
 	}
+
+
 
 	private JButton createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
