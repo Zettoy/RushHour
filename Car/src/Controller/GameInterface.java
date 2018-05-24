@@ -14,4 +14,5 @@ public interface GameInterface {
 	void nextLevel();
 	void quit();
 	void setPanel(GamePanel panel);
+	int getLevel();
 }

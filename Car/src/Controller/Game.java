@@ -23,9 +23,8 @@ public class Game implements GameInterface {
 	private int level;
 	
 	public Game () {
-		mapQueue = new BoundedQueue<MapInterface>(3);
+		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
 		moves = new LinkedList<>();
-		level = 0;
 	}
 	
 	@Override
@@ -35,6 +34,7 @@ public class Game implements GameInterface {
 		t.start();
 		leaderBoardShown = false;
 		scoreSaved = false;
+		level = 0;
 		generateMap();
 		movesMade = 0;
 		activeMap = initMap.clone();
@@ -97,7 +97,7 @@ public class Game implements GameInterface {
 	
 	@Override
 	public boolean isOver() {
-		if (level == 3) return true;
+		if (level == Constants.MAX_LEVEL) return true;
 		
 		return false;
 	}
@@ -146,7 +146,13 @@ public class Game implements GameInterface {
 	@Override
 	public void quit() {
 		t.interrupt();
-		mapQueue = new BoundedQueue<MapInterface>(3);
+		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
+	}
+
+	@Override
+	public int getLevel() {
+		return level;
+		
 	}
 	
 	/* Example of using other map generators

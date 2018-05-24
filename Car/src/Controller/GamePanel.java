@@ -17,6 +17,7 @@ public class GamePanel extends JPanel {
 	private Timer timer;
 	private JLabel movesLabel;
 	private JLabel timeLabel;
+	private JLabel levelLabel;
 	private JLabel completeLabel;
 	private JButton undo;
 	//private JButton restart;
@@ -58,6 +59,12 @@ public class GamePanel extends JPanel {
 		timeLabel.setForeground(Color.BLACK);
 		timeLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(timeLabel);
+		
+		levelLabel = new JLabel("Level" + game.getLevel());
+		levelLabel.setBounds(270,25,250,80);
+		levelLabel.setForeground(Color.BLACK);
+		levelLabel.setFont(new Font("Arial", Font.PLAIN,20));
+		this.add(levelLabel);
 
 		movesLabel = new JLabel("Moves Made: " +  0, JLabel.LEFT );
 		movesLabel.setBounds(90,25,250,80);
@@ -102,11 +109,22 @@ public class GamePanel extends JPanel {
 		Graphics2D g2d = (Graphics2D) g.create();
 		
 		g2d.setColor(Color.GRAY);
-		for (int i = 0; i < 6; i ++)
-			for (int j = 0; j < 6; j ++)
-				g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
+		for (int i = 0; i < 6; i ++) {
+			for (int j = 0; j < 6; j ++) {
+				if (i == 5 && j == 2) {
+					g2d.setColor(Color.RED);
+					g2d.fillRect(i * 70 + 88, j * 70 + 78, 64, 64);
+					g2d.setColor(Color.WHITE);
+					g2d.fillRect(i * 70 + 90, j * 70 + 80, 60, 60);
+					g2d.setColor(Color.GRAY);
+				} else {
+					g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
+				}
+			}
+		}
 
 		movesLabel.setText("Moves Made: "+ game.getMovesMade());
+		levelLabel.setText("Level" + game.getLevel());
 
 
 		int numCars = game.getMap().getNumCars();
