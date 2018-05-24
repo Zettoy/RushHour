@@ -60,7 +60,7 @@ public class GamePanel extends JPanel {
 		timeLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(timeLabel);
 		
-		levelLabel = new JLabel("Level" + game.getLevel());
+		levelLabel = new JLabel("Level " + game.getLevel());
 		levelLabel.setBounds(270,25,250,80);
 		levelLabel.setForeground(Color.BLACK);
 		levelLabel.setFont(new Font("Arial", Font.PLAIN,20));
@@ -124,7 +124,7 @@ public class GamePanel extends JPanel {
 		}
 
 		movesLabel.setText("Moves Made: "+ game.getMovesMade());
-		levelLabel.setText("Level" + game.getLevel());
+		levelLabel.setText("Level " + game.getLevel());
 
 
 		int numCars = game.getMap().getNumCars();
