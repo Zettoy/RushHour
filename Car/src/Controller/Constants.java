@@ -21,4 +21,6 @@ public class Constants {
 	public static final int IMPOSSIBLE = 35;
 	
 	public static final int MAX_CONFIGURATIONS = 24000;
+	
+	public static final int MAX_LEVEL = 10;
 }
