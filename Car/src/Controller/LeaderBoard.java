@@ -1,12 +1,8 @@
 package Controller;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -76,7 +72,8 @@ public class LeaderBoard {
             sc.close();
             return scores;
         } catch (FileNotFoundException e) {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+            @SuppressWarnings("resource")
+			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             Score[] scores = new Score[maxPositions];
             Score score;
             for (int i = 0; i < maxPositions; i++) {

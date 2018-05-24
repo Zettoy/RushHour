@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 
+@SuppressWarnings("serial")
 public class ViewLeaderBoard extends JPanel{
     private MainFrame mainFrame;
     private JLabel diffLabel;
