@@ -66,8 +66,8 @@ public class GamePanel extends JPanel {
 		
 		nextLevel = createButton("Next Level", 225,275);
 		remove(nextLevel);
-		undo = createButton("Undo", 230, 500);
-		exit = createButton("Return", 70, 500);
+		undo = createButton("Undo", 350, 500);
+		exit = createButton("Return", 90, 500);
 
 		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
 		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
@@ -131,10 +131,6 @@ public class GamePanel extends JPanel {
 			c.setStartY(y);
 			
 			if (car.isRedCar()) {
-				/*
-				g2d.setColor(Color.RED);
-				g2d.fillRect(x , y, 132, 62);
-				*/
 				g2d.drawImage(redCar, x, y, 132, 62, this);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
@@ -148,7 +144,7 @@ public class GamePanel extends JPanel {
 					Image carToDraw = null;
 					if (width > 180) carToDraw = blueCarLongHorizontal;
 					if (width < 180) carToDraw = blueCarShortHorizontal;
-					/*g2d.fillRect(x, y, width, height);*/
+
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
@@ -159,7 +155,7 @@ public class GamePanel extends JPanel {
 					Image carToDraw = null;
 					if (height > 180) carToDraw = blueCarLongVertical;
 					if (height < 180) carToDraw = blueCarShortVertical;
-					/*g2d.fillRect(x, y, width, height);*/
+
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
@@ -181,10 +177,15 @@ public class GamePanel extends JPanel {
 			movesLabel.setLocation(175,150);
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			timeLabel.setLocation(175,200);
-			add(nextLevel);
-			//restart.setLocation(225,350);
+			
 			exit.setLocation(225,425);
 			remove(undo);
+			if (game.isOver()) {
+				completeLabel.setText("GAME OVER");
+				return;
+			}
+			add(nextLevel);
+			//restart.setLocation(225,350);
 
 
 		} else if (!timer.isRunning()) {
@@ -196,9 +197,10 @@ public class GamePanel extends JPanel {
 			timeLabel.setLocation(370,25);
 			remove(completeLabel);
 			remove(nextLevel);
+			add(undo);
 			//restart.setLocation(390,500);
-			undo.setLocation(230, 500);
-			exit.setLocation(70,500);
+			undo.setLocation(350, 500);
+			exit.setLocation(90,500);
 		}
 		
 	}

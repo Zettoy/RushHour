@@ -16,11 +16,12 @@ public class Game implements GameInterface {
 	
 	private BoundedQueue<MapInterface> mapQueue;
 
+	private int level;
 	
 	public Game () {
 		mapQueue = new BoundedQueue<MapInterface>(3);
 		moves = new LinkedList<>();
-
+		level = 0;
 	}
 	
 	@Override
@@ -84,6 +85,13 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
+	public boolean isOver() {
+		if (level == 3) return true;
+		
+		return false;
+	}
+	
+	@Override
 	public MapInterface getMap() {
 		return activeMap;
 	}
@@ -110,6 +118,7 @@ public class Game implements GameInterface {
 	private void generateMap() {
 		try {
 			initMap = mapQueue.remove();
+			level ++;
 		} catch (InterruptedException e) {
 
 		}
