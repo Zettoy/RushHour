@@ -19,16 +19,20 @@ public class GamePanel extends JPanel {
 	private JLabel timeLabel;
 	private JLabel levelLabel;
 	private JLabel completeLabel;
+	private JLabel pauseLabel;
 	private JButton undo;
 	//private JButton restart;
 	private JButton exit;
 	private JButton nextLevel;
+	private JButton pause;
+	private JButton unpause;
 
 	private Image redCar;
 	private Image blueCarShortVertical;
 	private Image blueCarShortHorizontal;
 	private Image blueCarLongVertical;
 	private Image blueCarLongHorizontal;
+	private boolean isPaused;
 	
 	private Point mousePoint;
 	
@@ -36,7 +40,7 @@ public class GamePanel extends JPanel {
 		time = 0;
 		this.game = game;
 		this.cars = new ArrayList<>();
-		
+		isPaused = false;
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 		this.addKeyListener(new KeyInput(game, this));
@@ -48,6 +52,11 @@ public class GamePanel extends JPanel {
 		completeLabel.setBounds(175,65,250,80);
 		completeLabel.setForeground(Color.BLACK);
 		completeLabel.setFont(new Font("Arial", Font.BOLD,30));
+		
+		pauseLabel = new JLabel("PAUSED", JLabel.CENTER );
+		pauseLabel.setBounds(175,65,250,80);
+		pauseLabel.setForeground(Color.BLACK);
+		pauseLabel.setFont(new Font("Arial", Font.BOLD,30));
 
 		timeLabel = new JLabel("Time: " +  time, JLabel.LEFT );
 		timer = new Timer(1, actionEvent -> {
@@ -76,7 +85,9 @@ public class GamePanel extends JPanel {
 		remove(nextLevel);
 		undo = createButton("Undo", 350, 500);
 		exit = createButton("Return", 90, 500);
-
+		pause = createButton("Pause", 220, 500);
+		unpause = createButton("Play", 220, 500);
+		
 		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
 		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
 		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
@@ -183,7 +194,25 @@ public class GamePanel extends JPanel {
 			
 		}
 
-		if (game.isWin()) {
+		if(isPaused) {
+			g.setColor(Color.BLACK);
+			g.fillRect(50 , 50, 500, 500);
+			g.setColor(Color.WHITE);
+			g.fillRect(75 , 75, 450, 450);
+
+			this.add(pauseLabel);
+
+			timer.stop();
+			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			movesLabel.setLocation(175,95);
+			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			timeLabel.setLocation(175,125);
+			remove(undo);
+			remove(pause);
+			remove(exit);
+			add(unpause);
+			unpause.setLocation(220,500);
+		} else if (game.isWin()) {
 			g.setColor(Color.BLACK);
 			g.fillRect(50 , 50, 500, 500);
 			g.setColor(Color.WHITE);
@@ -204,30 +233,43 @@ public class GamePanel extends JPanel {
 			//restart.setLocation(225,350);
 			exit.setLocation(225,460);
 			remove(undo);
+			remove(unpause);
+			remove(pause);
 		} else if (!timer.isRunning()) {
-			time = 0;
+			//time = 0;
 			timer.restart();
 			movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			movesLabel.setLocation(90,25);
 			timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			timeLabel.setLocation(370,25);
 			remove(completeLabel);
+			remove(pauseLabel);
 			remove(nextLevel);
+			remove(unpause);
+			add(exit);
 			add(undo);
+			add(pause);
 			//restart.setLocation(390,500);
 			undo.setLocation(350, 500);
 			exit.setLocation(90,500);
+			pause.setLocation(220, 500);
 		}
 		
 	}
 
-
+	public void pause() {
+		isPaused = true;
+	}
+	
+	public void unpause() {
+		isPaused = false;
+	}
 
 	private JButton createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
 		//set images in background
 		Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
-		Image scaledImg = image.getScaledInstance(150, 50, Image.SCALE_SMOOTH);
+		Image scaledImg = image.getScaledInstance(125, 50, Image.SCALE_SMOOTH);
 		ImageIcon icon = new ImageIcon(scaledImg);
 		button.setIcon(icon);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -235,7 +277,7 @@ public class GamePanel extends JPanel {
 		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
 		button.setActionCommand(name);
 		button.setBounds(400, 100, 100, 40);
-		button.setBounds(x, y, 150, 50);
+		button.setBounds(x, y, 125, 50);
 		button.addActionListener(new GameButtonListener(game, this));
 		//add button to the panel
 		this.add(button);

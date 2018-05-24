@@ -38,7 +38,11 @@ public class GameButtonListener implements ActionListener {
         	game.nextLevel();
         	gamePanel.nextLevel();
             gamePanel.restartTime();
-        } 
+        } else if (command.equals("Pause")) {
+        	gamePanel.pause();
+        } else if (command.equals("Play")) {
+        	gamePanel.unpause();
+        }
         
         gamePanel.repaint();
     }
