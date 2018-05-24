@@ -43,7 +43,7 @@ public class GamePanel extends JPanel {
 		isPaused = false;
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
-		this.addKeyListener(new KeyInput(game, this));
+		//this.addKeyListener(new KeyInput(game, this));
 		this.addMouseListener(new MousePress(game, this));
 		this.addMouseMotionListener(new MouseDragDrop(game, this));
 		this.setFocusable(true);
@@ -94,10 +94,35 @@ public class GamePanel extends JPanel {
 		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
 		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
 
+		bindKeys();
+		
 		this.requestFocus();
 
 	}
 	
+	private void bindKeys() {
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
+		this.getActionMap().put("move up", new MoveAction(game, this, Constants.UP));
+		
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "move down");
+		this.getActionMap().put("move down", new MoveAction(game, this, Constants.DOWN));
+		
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "move left");
+		this.getActionMap().put("move left", new MoveAction(game, this, Constants.LEFT));
+		
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "move right");
+		this.getActionMap().put("move right", new MoveAction(game, this, Constants.RIGHT));
+		
+		for (Character i = 'A'; i <= 'A' + 26; i ++) {
+			String key = i.toString();
+			int car = (int) i - 'A' + Constants.RED;
+			
+			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key), key);
+			this.getActionMap().put(key, new SelectAction(game, this, car));
+		}
+		
+	}
+
 	public ArrayList<CarComponent> getCars() {
 		return cars;
 	}
