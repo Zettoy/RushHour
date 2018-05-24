@@ -6,9 +6,11 @@ public class CarComponent {
 	private int endX;
 	private int endY;
 	private int carId;
+	private int color;
 	
-	public CarComponent(int carId) {
+	public CarComponent(int carId, int color) {
 		this.carId = carId;
+		this.color = color;
 	}
 	
 	public void setStartX(int startX) {
@@ -45,5 +47,9 @@ public class CarComponent {
 	
 	public int getCarId() {
 		return carId;
+	}
+	
+	public int getColor() {
+		return color;
 	}
 }
