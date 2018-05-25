@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import Controller.Game;
 import Controller.GameInterface;
 import Controller.GamePanel;
+import Controller.MultiPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
@@ -19,7 +20,9 @@ public class MainFrame extends JFrame {
 	private JPanel currentPanel;
 	
 	private GameInterface game;
+	private GameInterface game2;
 	private GamePanel gamePanel;
+	private MultiPanel multiGame;
 	
 	public MainFrame() {
 		this.setResizable(false);
@@ -32,8 +35,11 @@ public class MainFrame extends JFrame {
 		leaderBoard = new ViewLeaderBoard(this);
 		((ViewLeaderBoard) leaderBoard).startPanel();
 		//SET ACTUAL GAME
+		
 		game = new Game();
+		game2 = new Game();
 		gamePanel = new GamePanel(game);
+		multiGame = new MultiPanel(game, game2);
 		actualGame = gamePanel;
 		game.setPanel(gamePanel);
 		GameButtonListener gameButtonListener = new GameButtonListener(game, gamePanel);
@@ -56,9 +62,14 @@ public class MainFrame extends JFrame {
 		this.getContentPane().add(mainMenu, BorderLayout.CENTER);
 		this.setCurrentPanel(mainMenu);
 		this.setVisible(true);
+		this.setResizable(true);
 	}
 	public GameInterface getGame() {
 		return game;
+	}
+	
+	public GameInterface getGame2() {
+		return game2;
 	}
 	
 	public JPanel getCurrentPanel() {
@@ -85,6 +96,10 @@ public class MainFrame extends JFrame {
 	
 	public JPanel getActualGame() {
 		return actualGame;
+	}
+	
+	public JPanel getMultiGame() {
+		return multiGame;
 	}
 
 	public JPanel getMainMenu() {

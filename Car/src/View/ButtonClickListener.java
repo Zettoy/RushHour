@@ -1,12 +1,15 @@
 package View;
 
 import java.awt.event.ActionEvent;
+
 import java.awt.event.ActionListener;
 
 import Controller.Constants;
 
+
 public class ButtonClickListener implements ActionListener {
 	private MainFrame mainFrame;
+
 	
 	public ButtonClickListener(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -19,6 +22,12 @@ public class ButtonClickListener implements ActionListener {
 		if(command.equals("New Game")) {
 			mainFrame.changePanel(mainFrame.getDifficulty());
 		} 
+		else if(command.equals("Multi players")) {
+			mainFrame.setSize(1200, 600);
+			mainFrame.changePanel(mainFrame.getMultiGame());
+			mainFrame.getGame().gameStart(Constants.INTERMEDIATE);
+			mainFrame.getGame2().gameClone(mainFrame.getGame().getMap());
+		}
 		else if(command.equals("Rules")) {
 			mainFrame.changePanel(mainFrame.getRules());
 		} 
