@@ -1,3 +1,7 @@
+/**
+ * The interface for a search heuristic
+ */
+
 package Model;
 
 import Controller.State;

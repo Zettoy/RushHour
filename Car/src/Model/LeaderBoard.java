@@ -125,11 +125,19 @@ public class LeaderBoard {
         }
     }
 
+    /**
+     * Sets new high score to user's inputted name
+     * @param name     Name for the high score
+     * @param position Position in leader board of high score
+     */
     public void setName(String name, int position) {
         scores[position - 1].setName(name);
         saveScore();
     }
 
+    /**
+     * Saves a Score[] to a file
+     */
     public void saveScore() {
         String fileLocation = "./LeaderBoard" + difficulty + ".txt";
         File file = new File(fileLocation);
@@ -146,6 +154,10 @@ public class LeaderBoard {
         }
     }
 
+    /**
+     * Getter
+     * @return the array of scores
+     */
     public Score[] getScores() {
         return scores;
     }

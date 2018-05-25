@@ -1,3 +1,7 @@
+/**
+ * A generic priority queue implementation
+ */
+
 package Model;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -5,7 +9,11 @@ import java.util.Comparator;
 public class PriorityQueue<E> {
     private ArrayList<E> array;
     private Comparator<E> comparator;
-	
+
+    /**
+     * Constructor
+     * @param comparator The comparator to compare two objects in the queue
+     */
 	public PriorityQueue(Comparator<E> comparator)
     {
         array = new ArrayList<E>();
@@ -13,6 +21,10 @@ public class PriorityQueue<E> {
         this.comparator = comparator;
     }
 
+    /**
+     * Adds element to the queue in the correct order based on comparator
+     * @param element The element to be added to the queue
+     */
 	public void add(E element)
     {
         int position = array.size();
@@ -25,11 +37,19 @@ public class PriorityQueue<E> {
         array.set(position, element);
     }
 
+    /**
+     * Returns if the queue is empty or not
+     * @return true if empty and false otherwise
+     */
     public boolean isEmpty()
     {
         return array.size() <= 1;
     }
 
+    /**
+     * Removes the first element of the priority queue
+     * @return The first element of the queue
+     */
     public E remove()
     {
     	if (isEmpty()) return null;
@@ -48,6 +68,11 @@ public class PriorityQueue<E> {
         return top;
     }
 
+    /**
+     * Gets the position of a child of a given elements position
+     * @param position Elements position to find the child's position of
+     * @return The int position of the child
+     */
     private int positionOfChild(int position)
     {
         E leftChild = array.get(2 * position);
