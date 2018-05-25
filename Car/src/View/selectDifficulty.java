@@ -44,10 +44,10 @@ public class selectDifficulty extends JPanel {
 	private void createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
 		//set images in background
-		Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
-		Image scaledImg = image.getScaledInstance(150, 50, Image.SCALE_SMOOTH);
-		ImageIcon icon = new ImageIcon(scaledImg);
-		button.setIcon(icon);
+		//Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
+		//Image scaledImg = image.getScaledInstance(150, 50, Image.SCALE_SMOOTH);
+		//ImageIcon icon = new ImageIcon(scaledImg);
+		//button.setIcon(icon);
 		button.setHorizontalTextPosition(SwingConstants.CENTER);
 		//TODO: MAKE TRANSPARENT
 		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
