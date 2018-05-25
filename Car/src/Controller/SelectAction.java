@@ -22,5 +22,5 @@ public class SelectAction extends AbstractAction{
 		gamePanel.repaint();
 		
 	}
-
+	
 }

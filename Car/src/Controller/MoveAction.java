@@ -1,7 +1,6 @@
 package Controller;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 
 @SuppressWarnings("serial")
@@ -23,4 +22,5 @@ public class MoveAction extends AbstractAction {
 		gamePanel.repaint();
 		
 	}
+
 }

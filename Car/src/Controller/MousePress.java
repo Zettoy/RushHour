@@ -29,7 +29,7 @@ public class MousePress implements MouseListener{
 		gamePanel.repaint();
 		
 	}
-
+	
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		game.selectCar(0);

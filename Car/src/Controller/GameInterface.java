@@ -16,4 +16,5 @@ public interface GameInterface {
 	void setPanel(GamePanel panel);
 	int getLevel();
 	void saveScore();
+	void gameClone(MapInterface map);
 }
