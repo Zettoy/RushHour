@@ -252,7 +252,7 @@ public class GamePanel extends JPanel {
 			c.setStartY(y);
 			
 			if (car.isRedCar()) {
-				g2d.drawImage(redCar, x, y, 132, 62, this);
+				g2d.drawImage(redCar, x, y, 131, 61, this);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
 				
