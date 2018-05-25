@@ -41,6 +41,7 @@ public class GamePanel extends JPanel {
 	private Point mousePoint;
 	
 	public GamePanel (GameInterface game) {
+		game.setPanel(this);
 		time = 0;
 		this.game = game;
 		this.cars = new ArrayList<>();
