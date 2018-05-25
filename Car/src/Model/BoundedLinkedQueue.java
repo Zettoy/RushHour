@@ -6,6 +6,10 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Bounded first-in-first-out collection of items that allows for concurrent access by producers and consumers
+ * @param <E> The type of item that the queue holds
+ */
 public class BoundedLinkedQueue<E> implements BoundedQueue<E> {
 
 	private Queue<E> elements;
@@ -13,7 +17,10 @@ public class BoundedLinkedQueue<E> implements BoundedQueue<E> {
 	private Lock queueLock;
 	private Condition spaceAvailable;
 	private Condition valueAvailable;
-	
+	/**
+	 * Constructs a BoundedLinkedQueue object
+	 * @param capacity the maximum number of items that can be held in the queue at any one time
+	 */
 	public BoundedLinkedQueue(int capacity) {
 		this.capacity = capacity;
 		elements = new LinkedList<E>();
@@ -21,7 +28,10 @@ public class BoundedLinkedQueue<E> implements BoundedQueue<E> {
 		spaceAvailable = queueLock.newCondition();
 		valueAvailable = queueLock.newCondition();
 	}
-	
+	/**
+	 * Inserts the specified element at the tail of the queue
+	 * @param element the item to be inserted
+	 */
 	public void add(E element) throws InterruptedException {
 		queueLock.lock();
 		try {
@@ -33,7 +43,11 @@ public class BoundedLinkedQueue<E> implements BoundedQueue<E> {
 			queueLock.unlock();
 		}
 	}
-	
+	/**
+	 * Removes the element at the head of the queue
+	 * @return the element of the queue that was removed
+	 * @postcondition element != null
+	 */
 	public E remove() throws InterruptedException {
 		queueLock.lock();
 		try {
