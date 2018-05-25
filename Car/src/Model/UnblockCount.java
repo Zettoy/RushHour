@@ -1,12 +1,20 @@
 package Model;
 
 import Controller.*;
-
+/**
+ * Heuristic that estimates the number of additional moves that need to made to achieve the winning state of the game
+ */
 public class UnblockCount implements SearchHeuristic {
-	
+	/**
+	 * Constructs UnblockCount object
+	 */
 	public UnblockCount() {
 	}
-	
+	/**
+	 * Counts the number of moves needed to unblock the path of the red car to the exit
+	 * @param state the current State of the board
+	 * @return the estimated number of moves left to be made
+	 */
 	public int calculate(State state) {
 		
 		MapInterface map = ((MapState) state).getMap();
@@ -20,7 +28,14 @@ public class UnblockCount implements SearchHeuristic {
 		
 		return movesToUnblock;
 	}
-	
+	/**
+	 * Estimates the number of moves needed to unblock a specified square of the board
+	 * @param map the Map in its current state
+	 * @param x the x-coordinate of the position to be cleared
+	 * @param y the y-coordinate of the position to be cleared
+	 * @param iterations how many more times the function is going to run through adjacent squares to find unblock count
+	 * @return the estimated number of moves to unblock
+	 */
 	public int getNumMovesToUnblock(MapInterface map, int x, int y, int iterations) {
 		
 		if (iterations == 0 || map.getCarId(x, y) == 0) return 0;

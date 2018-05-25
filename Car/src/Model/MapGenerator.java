@@ -34,8 +34,8 @@ public class MapGenerator implements MapGeneratorInterface, Runnable {
 		}
 	}
 	/**
-	 * Generates particular arrangements of cars on the grid and tests them for number of moves to solve until one such arrangement fits within
-	 * the designated parameters of difficulty
+	 * Generates particular arrangements of cars on the grid and tests them for number of moves required to solve them until one such 
+	 * arrangement fits within the designated parameters of difficulty
 	 */
 	private void createMap() {
 		int minMovesAllowed = Constants.EASY;
