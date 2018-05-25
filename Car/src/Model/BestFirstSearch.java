@@ -7,14 +7,23 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
-
+/**
+ * Best-first search algorithm to conduct state space search
+ */
 public class BestFirstSearch implements StateSpaceSearch {
 	private SearchHeuristic heuristic;
-	
+	/**
+	 * Constructs a BestFirstSearch object
+	 * @param heuristic concrete implementation of the SearchHeuristic interface
+	 */
 	public BestFirstSearch(SearchHeuristic heuristic) {
 		this.heuristic = heuristic;
 	}
-	
+	/**
+	 * Determines an estimate of the number of states that need to be traversed in order to reach the goal state
+	 * @param initialState the State from which the search begins
+	 * @return the cost of reaching the goal state from the initial state if all edges have identical unit cost
+	 */
 	public int findTotalDistanceToGoal(State initialState) {
 		PriorityQueue<State> openSet = new PriorityQueue<State>(new Comparator<State>() {
 			public int compare(State a, State b) {

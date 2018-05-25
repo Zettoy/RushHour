@@ -7,7 +7,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * Bounded first-in-first-out collection of items that allows for concurrent access by producers and consumers
+ * Bounded thread-safe implementation of BoundedQueue with first-in-first-out ordering that allows for concurrent access by producers and consumers
  * @param <E> The type of item that the queue holds
  */
 public class BoundedLinkedQueue<E> implements BoundedQueue<E> {

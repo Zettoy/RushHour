@@ -1,6 +1,6 @@
 package Model;
 /**
- * Bounded thread-safe collection of items with FIFO ordering
+ * Ordered collection of items with fixed capacity and operations for adding and removing items from the collection
  * @param <E> the type of the elements contained in the queue
  */
 public interface BoundedQueue<E> {
