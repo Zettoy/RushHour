@@ -5,6 +5,9 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
+/**
+* code to implement the drag and drop functionality of the game to move cars
+*/
 public class MouseDragDrop implements MouseMotionListener {
 	private GameInterface game;
 	private GamePanel gamePanel;
@@ -12,11 +15,20 @@ public class MouseDragDrop implements MouseMotionListener {
 	private int dx;
 	private int dy;
 	
+	/**
+	* constructor
+	* @param game current version of game being run
+	* @param gamePanel visuals of the game
+	*/
 	public MouseDragDrop(GameInterface game, GamePanel gamePanel) {
 		this.game = game;
 		this.gamePanel = gamePanel;
 	}
 
+	/**
+	* function to move car in desired direction when a dragging action is made
+	* @param event the dragging event to be registered
+	*/
 	@Override
 	public void mouseDragged(MouseEvent event) {
 		if (game.getSelectedCar() == 0) return;
