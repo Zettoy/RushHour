@@ -1,6 +1,9 @@
+/**
+ * The visual implementation for the in game leader board that appears after completing a mission
+ */
+
 package View;
 
-import Controller.Game;
 import Controller.GameInterface;
 import Controller.GamePanel;
 import Controller.Score;
@@ -25,12 +28,21 @@ public class InGameLeaderBoard{
     private JButton submit;
     private JLabel name;
 
-
+    /**
+     * Constructor
+     */
     public InGameLeaderBoard(){
         nameField = new JTextField(10);
         nameField.setBounds(225, 345,150, 30);
     }
 
+    /**
+     * Shows the leader board on the in game competition screen
+     * @param game      The Game being played
+     * @param panel     The GamePanel for game being played
+     * @param scores    An array of Score containing all the leader board scores for the difficulty
+     * @param position  Position current score is in the leader board, 0 if it is not
+     */
     public void showScores(GameInterface game, GamePanel panel, Score[] scores, int position){
         this.game = game;
         this.panel = panel;
@@ -63,6 +75,7 @@ public class InGameLeaderBoard{
         nameField.setVisible(false);
         panel.add(submit);
         submit.setVisible(false);
+        // If new high score
         if(position != 0) {
             highScoreLabel.setVisible(true);
             submit.setVisible(true);
@@ -72,6 +85,9 @@ public class InGameLeaderBoard{
         }
     }
 
+    /**
+     * Removes all the Leader Board components
+     */
     public void removeLeaderBoard() {
         panel.remove(score1NameLabel);
         panel.remove(score1TimeLabel);
@@ -86,6 +102,13 @@ public class InGameLeaderBoard{
         panel.remove(submit);
     }
 
+    /**
+     * Creates a simple button for submitting leader board score
+     * @param name String on button
+     * @param x    x axis position for button
+     * @param y    y axis position for button
+     * @return The button
+     */
     private JButton createPlainButton(String name, int x, int y) {
         JButton button = new JButton(name);
         button.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -97,6 +120,14 @@ public class InGameLeaderBoard{
         return button;
     }
 
+    /**
+     * Creates JLabel
+     * @param text   Text in the label
+     * @param xPos   X axis position for label
+     * @param yPos   Y axis position for label
+     * @param color  Color of the label text
+     * @return The label
+     */
     private JLabel addLabel(String text, int xPos, int yPos, int color) {
         JLabel label = new JLabel(text);
         label.setBounds(xPos,yPos,225, 25);
@@ -110,6 +141,11 @@ public class InGameLeaderBoard{
         return label;
     }
 
+    /**
+     * Gets text inside the high score name text field
+     * If text is null the text field is set to the color RED
+     * @return The String in the text field
+     */
     public String getName() {
         if(nameField.getText() == null) {
             nameField.setBackground(Color.RED);

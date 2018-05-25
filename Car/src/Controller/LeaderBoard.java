@@ -1,3 +1,9 @@
+/**
+ * The code for saving and reading leader boards from files
+ * and manipulating arrays of Score
+ * Leader boards have format:
+ * (name);(time);(number of moves);
+ */
 package Controller;
 
 import java.io.*;
@@ -11,6 +17,11 @@ public class LeaderBoard {
     private Score[] scores;
     private int difficulty;
 
+    /**
+     * Constructor
+     * @param maxPositions The limit of the number of scores on the leader board
+     * @param difficulty   The difficulty of the leader board needed
+     */
     public LeaderBoard(int maxPositions, int difficulty) {
         this.maxPositions = maxPositions;
         this.difficulty = difficulty;
@@ -22,11 +33,20 @@ public class LeaderBoard {
 
     }
 
+    /**
+     * Creates new score and adds to leader board in order of time, if it's a high score
+     * @param name      Name of user who got high score
+     * @param time      Time taken to finish level
+     * @param movesMade Number of moves made to finish level
+     * @return The position the score in leader, 0 if not on the leader board
+     */
     public int addScore(String name, Date time, int movesMade) {
         for( int i = maxPositions - 1; i >= 0; i--) {
             if(!time.before(scores[i].getTime())) {
+                // If score not a high score
                 if(i == maxPositions -1) {
                     return 0;
+                // Score in positions 2 to maxPositions
                 } else {
                     Score newScore = new Score(name, time, movesMade);
                     addScorePos(newScore, i + 2);
@@ -34,19 +54,29 @@ public class LeaderBoard {
                 }
             }
         }
+        // Score in position 1
         Score newScore = new Score(name, time, movesMade);
         addScorePos(newScore, 1);
         return 1;
     }
 
+    /**
+     * Adds Score to scores array at set position
+     * @param newScore Score of the new score to be added
+     * @param position Int of the position the score is in the leader board
+     */
     private void addScorePos(Score newScore, int position) {
         for(int i = maxPositions - 1; i >= position; i--) {
             scores[i] = scores[i-1];
-
         }
         scores[position - 1] = newScore;
     }
 
+    /**
+     * Loads leader board from a file
+     * @return Score[] of Scores from the file
+     * @throws IOException
+     */
     private Score[] loadLeaderBoard() throws IOException {
         String fileLocation = "./LeaderBoard" + difficulty + ".txt";
         File file;
@@ -71,6 +101,7 @@ public class LeaderBoard {
             sc.close();
             return scores;
         } catch (FileNotFoundException e) {
+            // Creates a file with default high leader board values if one does not exist
             @SuppressWarnings("resource")
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
             Score[] scores = new Score[maxPositions];

@@ -1,20 +1,28 @@
+/**
+ * The ActionListener for all the buttons in the main menu
+ */
 package View;
 
 import java.awt.event.ActionEvent;
-
 import java.awt.event.ActionListener;
 
 import Controller.Constants;
 
-
 public class ButtonClickListener implements ActionListener {
 	private MainFrame mainFrame;
 
-	
+	/**
+	 * Constructor
+	 * @param mainFrame The programs mainFrame
+	 */
 	public ButtonClickListener(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 
+	/**
+	 * The actions for each button press
+	 * @param e The name of the button being pressed
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String command = e.getActionCommand();
@@ -41,20 +49,16 @@ public class ButtonClickListener implements ActionListener {
 			mainFrame.changePanel(mainFrame.getMainMenu());
 		}
 		else if(command.equals("Easy")) {
-			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
 			mainFrame.getGame().gameStart(Constants.EASY);
 		} 
 		else if(command.equals("Medium")) {
-			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
 			mainFrame.getGame().gameStart(Constants.INTERMEDIATE);
 		} 
 		else if(command.equals("Hard")) {
-			//TODO: SET DIFFICULTY LATER
 			mainFrame.changePanel(mainFrame.getActualGame());
 			mainFrame.getGame().gameStart(Constants.HARD);
 		}
-		
 	}
 }
