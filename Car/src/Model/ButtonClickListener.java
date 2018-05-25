@@ -1,12 +1,13 @@
 /**
  * The ActionListener for all the buttons in the main menu
  */
-package View;
+package Model;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Controller.Constants;
+import View.MainFrame;
 
 public class ButtonClickListener implements ActionListener {
 	private MainFrame mainFrame;

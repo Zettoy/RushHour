@@ -1,5 +1,7 @@
 package Controller;
 
+import View.GamePanel;
+
 public interface GameInterface {
 	void gameStart(int difficulty);
 	void moveCar(int direction);

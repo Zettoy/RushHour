@@ -1,4 +1,7 @@
-package Controller;
+package Model;
+
+import Controller.Constants;
+import Controller.State;
 
 import java.util.Collection;
 import java.util.Comparator;

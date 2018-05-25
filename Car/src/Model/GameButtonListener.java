@@ -1,10 +1,11 @@
 /**
  * The ActionListener for all the buttons during the game
  */
-package View;
+package Model;
 
 import Controller.GameInterface;
-import Controller.GamePanel;
+import View.GamePanel;
+import View.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

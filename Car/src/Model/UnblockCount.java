@@ -1,4 +1,7 @@
-package Controller;
+package Model;
+
+import Controller.*;
+
 public class UnblockCount implements SearchHeuristic {
 	
 	public UnblockCount() {

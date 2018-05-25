@@ -1,4 +1,7 @@
-package Controller;
+package Model;
+
+import Controller.GameInterface;
+import View.MultiPanel;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;

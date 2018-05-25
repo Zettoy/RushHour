@@ -1,6 +1,7 @@
-package Controller;
+package Model;
 import java.util.Random;
-import Controller.Constants;
+import Controller.*;
+
 
 public class MapGenerator implements MapGeneratorInterface, Runnable {	
 

@@ -1,5 +1,10 @@
 package Controller;
 
+import Model.BoundedQueue;
+import Model.LeaderBoard;
+import Model.MapGenerator;
+import Model.MapGeneratorInterface;
+import View.GamePanel;
 import View.InGameLeaderBoard;
 
 import java.util.LinkedList;

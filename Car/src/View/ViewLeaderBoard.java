@@ -1,7 +1,8 @@
 package View;
 
 import Controller.Constants;
-import Controller.LeaderBoard;
+import Model.ButtonClickListener;
+import Model.LeaderBoard;
 import Controller.Score;
 
 import javax.swing.*;

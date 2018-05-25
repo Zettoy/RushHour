@@ -4,7 +4,9 @@
  * Leader boards have format:
  * (name);(time);(number of moves);
  */
-package Controller;
+package Model;
+
+import Controller.Score;
 
 import java.io.*;
 import java.text.ParseException;

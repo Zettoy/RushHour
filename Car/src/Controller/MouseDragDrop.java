@@ -1,4 +1,6 @@
 package Controller;
+import View.GamePanel;
+
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;

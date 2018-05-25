@@ -1,5 +1,7 @@
-package Controller;
-import View.GameButtonListener;
+package View;
+import Controller.*;
+import Model.MoveAction;
+import Model.GameButtonListener;
 
 import java.awt.*;
 import java.text.ParseException;
@@ -11,79 +13,87 @@ import java.util.Random;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class MultiPanel extends JPanel{
-	private GameInterface game1;
-	private GameInterface game2;
+public class GamePanel extends JPanel {
+	private GameInterface game;
 	private ArrayList<CarComponent> cars;
 	private int time;
 	private Timer timer;
 	private JLabel movesLabel;
-	private JLabel movesLabel2;
 	private JLabel timeLabel;
-	private JLabel timeLabel2;
+	private JLabel levelLabel;
 	private JLabel completeLabel;
-	private JLabel completeLabel2;
+	private JLabel pauseLabel;
+	private JButton undo;
+	//private JButton restart;
+	private JButton exit;
+	private JButton nextLevel;
+	private JButton pause;
+	private JButton unpause;
 
 	private Image redCar;
+	//private Image blueCarShortVertical;
 	private ArrayList<Image> carShortVertical;
 	private ArrayList<Image> carShortHorizontal;
 	private ArrayList<Image> carLongVertical;
 	private ArrayList<Image> carLongHorizontal;
 
-	private String time1;
-	private String time2;
+	private boolean isPaused;
 	
 	private Point mousePoint;
 	
-	public MultiPanel (GameInterface game1, GameInterface game2) {
+	public GamePanel (GameInterface game) {
+		game.setPanel(this);
 		time = 0;
-		this.game1 = game1;
-		this.game2 = game2;
+		this.game = game;
 		this.cars = new ArrayList<>();
-
+		isPaused = false;
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
-		this.addMouseListener(new MousePressMulti(game2, this));
-		this.addMouseMotionListener(new MouseDragDropMulti(game2, this));
+		//this.addKeyListener(new KeyInput(game, this));
+		this.addMouseListener(new MousePress(game, this));
+		this.addMouseMotionListener(new MouseDragDrop(game, this));
 		this.setFocusable(true);
 
 		completeLabel = new JLabel("COMPLETE", JLabel.CENTER );
 		completeLabel.setBounds(175,65,250,80);
 		completeLabel.setForeground(Color.BLACK);
 		completeLabel.setFont(new Font("Arial", Font.BOLD,30));
-		completeLabel2 = new JLabel("COMPLETE", JLabel.CENTER );
-		completeLabel2.setBounds(775,65,250,80);
-		completeLabel2.setForeground(Color.BLACK);
-		completeLabel2.setFont(new Font("Arial", Font.BOLD,30));
 		
+		pauseLabel = new JLabel("PAUSED", JLabel.CENTER );
+		pauseLabel.setBounds(175,65,250,80);
+		pauseLabel.setForeground(Color.BLACK);
+		pauseLabel.setFont(new Font("Arial", Font.BOLD,30));
+
 		timeLabel = new JLabel("Time: " +  time, JLabel.LEFT );
-		timeLabel2 = new JLabel("Time: " +  time, JLabel.LEFT );
 		timer = new Timer(1, actionEvent -> {
 				time++;
 				timeLabel.setText(("Time: " + new SimpleDateFormat("mm:ss:SSS").format(new Date(time))).substring(0,14));
-				timeLabel2.setText(("Time: " + new SimpleDateFormat("mm:ss:SSS").format(new Date(time))).substring(0,14));
         });
 		timer.start();
 		timeLabel.setBounds(370,25,250,80);
 		timeLabel.setForeground(Color.BLACK);
 		timeLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(timeLabel);
-		timeLabel2.setBounds(970,25,250,80);
-		timeLabel2.setForeground(Color.BLACK);
-		timeLabel2.setFont(new Font("Arial", Font.PLAIN,20));
-		this.add(timeLabel2);
+		
+		levelLabel = new JLabel("Level " + game.getLevel());
+		levelLabel.setBounds(270,25,250,80);
+		levelLabel.setForeground(Color.BLACK);
+		levelLabel.setFont(new Font("Arial", Font.PLAIN,20));
+		this.add(levelLabel);
 
 		movesLabel = new JLabel("Moves Made: " +  0, JLabel.LEFT );
 		movesLabel.setBounds(90,25,250,80);
 		movesLabel.setForeground(Color.BLACK);
 		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel);
-		movesLabel2 = new JLabel("Moves Made: " +  0, JLabel.LEFT );
-		movesLabel2.setBounds(690,25,250,80);
-		movesLabel2.setForeground(Color.BLACK);
-		movesLabel2.setFont(new Font("Arial", Font.PLAIN,20));
-		this.add(movesLabel2);
-			
+		
+		nextLevel = createButton("Next Level", 225,395);
+		remove(nextLevel);
+		undo = createButton("Undo", 350, 500);
+		exit = createButton("Return", 90, 500);
+		pause = createButton("Pause", 220, 500);
+		unpause = createButton("Play", 220, 500);
+
 		readCarImgs();
 		bindKeys();
 		
@@ -125,23 +135,23 @@ public class MultiPanel extends JPanel{
 
 	private void bindKeys() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
-		this.getActionMap().put("move up", new MoveActionMulti(game1, this, Constants.UP));
+		this.getActionMap().put("move up", new MoveAction(game, this, Constants.UP));
 		
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "move down");
-		this.getActionMap().put("move down", new MoveActionMulti(game1, this, Constants.DOWN));
+		this.getActionMap().put("move down", new MoveAction(game, this, Constants.DOWN));
 		
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "move left");
-		this.getActionMap().put("move left", new MoveActionMulti(game1, this, Constants.LEFT));
+		this.getActionMap().put("move left", new MoveAction(game, this, Constants.LEFT));
 		
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "move right");
-		this.getActionMap().put("move right", new MoveActionMulti(game1, this, Constants.RIGHT));
+		this.getActionMap().put("move right", new MoveAction(game, this, Constants.RIGHT));
 		
 		for (Character i = 'A'; i <= 'A' + 26; i ++) {
 			String key = i.toString();
 			int car = (int) i - 'A' + Constants.RED;
 			
 			this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(key), key);
-			this.getActionMap().put(key, new SelectActionMulti(game1, this, car));
+			this.getActionMap().put(key, new SelectAction(game, this, car));
 		}
 		
 	}
@@ -162,7 +172,6 @@ public class MultiPanel extends JPanel{
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		doDrawing(g);
-		doDrawing2(g);
 	}
 	
 	private void doDrawing(Graphics g) {
@@ -183,10 +192,11 @@ public class MultiPanel extends JPanel{
 			}
 		}
 
-		movesLabel.setText("Moves Made: "+ game1.getMovesMade());
+		movesLabel.setText("Moves Made: "+ game.getMovesMade());
+		levelLabel.setText("Level " + game.getLevel());
 
 
-		int numCars = game1.getMap().getNumCars();
+		int numCars = game.getMap().getNumCars();
 		g.setFont(new Font("Arial", Font.BOLD, 25));
 		g.setColor(Color.WHITE);
 		
@@ -199,119 +209,12 @@ public class MultiPanel extends JPanel{
 		}
 		
 		for (CarComponent c : cars) {
-			CarInterface car = game1.getMap().getCar(c.getCarId());
+			CarInterface car = game.getMap().getCar(c.getCarId());
 			Character direction = car.getDirection();
 			int length = car.getLength();
 			
 			Position p = car.getPosition();
 			int x = p.getX() * 70 + 90;
-			int y = p.getY() * 70 + 80;
-			c.setStartX(x);
-			c.setStartY(y);
-			
-			if (car.isRedCar()) {
-				g2d.setColor(Color.RED);
-				g2d.fillRect(x , y, 132, 62);
-				c.setEndX(x + 132);
-				c.setEndY(y + 62);
-				
-			} else {
-				g2d.setColor(Color.BLUE);
-				
-				if (direction == Constants.HORIZONTAL) {
-					int width = 60 * length + 10 * (length - 1) + 2;
-					int height = 62;
-					g2d.fillRect(x, y, width, height);
-					c.setEndX(x + width);
-					c.setEndY(y + height);
-					
-				} else if (direction == Constants.VERTICAL) {
-					int width = 62;
-					int height = 60 * length + 10 * (length - 1) + 2;
-					g2d.fillRect(x, y, width, height);
-					c.setEndX(x + width);
-					c.setEndY(y + height);
-				}
-			}
-			
-			Character carIdForDisplay = (char) (c.getCarId() + 'A' - 1);
-			
-			g.setFont(new Font("Arial", Font.BOLD, 25));
-			g.setColor(Color.WHITE);
-			g.drawString(carIdForDisplay + "", p.getX() * 70 + 95 , p.getY() * 70 + 105);
-			
-		}
-
-		boolean processed = false;
-		if (game1.isWinMulti()) {
-			if (processed == true) return;
-			processed = true;
-			
-			g.setColor(Color.BLACK);
-			g.fillRect(50 , 50, 500, 500);
-			g.setColor(Color.WHITE);
-			g.fillRect(75 , 75, 450, 450);
-
-			this.add(completeLabel);
-
-			if (game2.isWinMulti()) timer.stop();
-			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel.setLocation(175,110);
-			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel.setLocation(175,150);
-			
-			return;
-		}
-		
-		CarInterface selectedCar = game1.getMap().getCar(game1.getSelectedCar());
-		if (selectedCar == null) return;
-		Position selectedP = selectedCar.getPosition();
-		
-		g2d.setColor(Color.WHITE);
-		g2d.fillRect(selectedP.getX() * 70 + 95, selectedP.getY() * 70 + 85, 20, 20);
-
-	}
-	
-	private void doDrawing2(Graphics g) {
-		Graphics2D g2d = (Graphics2D) g.create();
-		
-		g2d.setColor(Color.GRAY);
-		for (int i = 0; i < 6; i ++) {
-			for (int j = 0; j < 6; j ++) {
-				if (i == 5 && j == 2) {
-					g2d.setColor(Color.RED);
-					g2d.fillRect(i * 70 + 688, j * 70 + 78, 64, 64);
-					g2d.setColor(Color.WHITE);
-					g2d.fillRect(i * 70 + 690, j * 70 + 80, 60, 60);
-					g2d.setColor(Color.GRAY);
-				} else {
-					g2d.drawRect(i * 70 + 690, j * 70 + 80, 60, 60);
-				}
-			}
-		}
-
-		movesLabel2.setText("Moves Made: "+ game2.getMovesMade());
-
-
-		int numCars = game2.getMap().getNumCars();
-		g.setFont(new Font("Arial", Font.BOLD, 25));
-		g.setColor(Color.WHITE);
-		
-		for (int i = 0; i < numCars; i ++) {
-			if (cars.size() >= numCars) break;
-			
-			int carId = i + Constants.RED;
-			Random rand = new Random();
-			cars.add(new CarComponent(carId, rand.nextInt(5)));
-		}
-		
-		for (CarComponent c : cars) {
-			CarInterface car = game2.getMap().getCar(c.getCarId());
-			Character direction = car.getDirection();
-			int length = car.getLength();
-			
-			Position p = car.getPosition();
-			int x = p.getX() * 70 + 690;
 			int y = p.getY() * 70 + 80;
 			c.setStartX(x);
 			c.setStartY(y);
@@ -350,35 +253,94 @@ public class MultiPanel extends JPanel{
 			
 		}
 
-		boolean processed = false;
-		if (game2.isWinMulti()) {
-			if (processed == true) return;
-			
+		if(isPaused) {
 			g.setColor(Color.BLACK);
-			g.fillRect(650 , 50, 500, 500);
+			g.fillRect(50 , 50, 500, 500);
 			g.setColor(Color.WHITE);
-			g.fillRect(675 , 75, 450, 450);
+			g.fillRect(75 , 75, 450, 450);
 
-			this.add(completeLabel2);
+			this.add(pauseLabel);
 
-			if (game1.isWinMulti()) timer.stop();
-			movesLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel2.setLocation(775,110);
-			
-			if (processed == false) time2 = timeLabel2.getText();
-			
-			this.remove(timeLabel2);
-			JLabel completeTimeLabel = new JLabel(time2, JLabel.CENTER);
-			completeTimeLabel.setBounds(775, 150, 250, 80);
-			completeTimeLabel.setForeground(Color.BLACK);
-			completeTimeLabel.setFont(new Font("Arial", Font.PLAIN,20));
+			timer.stop();
+			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			movesLabel.setLocation(175,95);
+			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			timeLabel.setLocation(175,125);
+			remove(undo);
+			remove(pause);
+			remove(exit);
+			add(unpause);
+			unpause.setLocation(220,500);
+		} else if (game.isWin()) {
+			g.setColor(Color.BLACK);
+			g.fillRect(50 , 50, 500, 500);
+			g.setColor(Color.WHITE);
+			g.fillRect(75 , 75, 450, 450);
 
-			this.add(completeTimeLabel);
-			
-			processed = true;
+			this.add(completeLabel);
+
+			timer.stop();
+			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			movesLabel.setLocation(175,110);
+			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			timeLabel.setLocation(175,150);
+			if (game.isOver()) {
+				completeLabel.setText("GAME OVER");
+				return;
+			}
+			add(nextLevel);
+			//restart.setLocation(225,350);
+			exit.setLocation(225,460);
+			remove(undo);
+			remove(unpause);
+			remove(pause);
+		} else if (!timer.isRunning()) {
+			//time = 0;
+			timer.restart();
+			movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			movesLabel.setLocation(90,25);
+			timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			timeLabel.setLocation(370,25);
+			remove(completeLabel);
+			remove(pauseLabel);
+			remove(nextLevel);
+			remove(unpause);
+			add(exit);
+			add(undo);
+			add(pause);
+			//restart.setLocation(390,500);
+			undo.setLocation(350, 500);
+			exit.setLocation(90,500);
+			pause.setLocation(220, 500);
 		}
-
 		
+	}
+
+	public void pause() {
+		isPaused = true;
+	}
+	
+	public void unpause() {
+		isPaused = false;
+	}
+
+	private JButton createButton(String name, int x, int y) {
+		JButton button = new JButton(name);
+		//set images in background
+		Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
+		Image scaledImg = image.getScaledInstance(125, 50, Image.SCALE_SMOOTH);
+		ImageIcon icon = new ImageIcon(scaledImg);
+		button.setIcon(icon);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		//TODO: MAKE TRANSPARENT
+		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
+		button.setActionCommand(name);
+		button.setBounds(400, 100, 100, 40);
+		button.setBounds(x, y, 150, 50);
+		button.addActionListener(new GameButtonListener(game, this));
+		//add button to the panel
+		this.add(button);
+		return button;
 	}
 
 	public void restartTime() {

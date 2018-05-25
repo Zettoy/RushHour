@@ -1,4 +1,8 @@
-package Controller;
+package Model;
+
+import Controller.CarInterface;
+import Controller.Constants;
+import Controller.MapInterface;
 
 import java.util.Set;
 

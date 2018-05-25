@@ -1,5 +1,7 @@
 package Controller;
 
+import View.GamePanel;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;

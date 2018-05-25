@@ -5,8 +5,8 @@
 package View;
 
 import Controller.GameInterface;
-import Controller.GamePanel;
 import Controller.Score;
+import Model.GameButtonListener;
 
 import javax.swing.*;
 import java.awt.*;

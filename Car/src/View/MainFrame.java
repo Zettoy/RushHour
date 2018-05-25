@@ -7,8 +7,7 @@ import javax.swing.JPanel;
 
 import Controller.Game;
 import Controller.GameInterface;
-import Controller.GamePanel;
-import Controller.MultiPanel;
+import Model.GameButtonListener;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
