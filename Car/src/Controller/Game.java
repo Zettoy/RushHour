@@ -9,6 +9,10 @@ import View.InGameLeaderBoard;
 
 import java.util.LinkedList;
 
+/**
+* code that keeps track of the state of the game 
+* including functions to change screens from the game-playing screen to places such as generating the next level
+*/
 public class Game implements GameInterface {
 	private MapInterface activeMap;
 	private MapInterface initMap;
@@ -29,11 +33,20 @@ public class Game implements GameInterface {
 	private int scorePosition;
 	private int difficulty;
 	
+	/**
+	* constructor
+	* creates new queue to generate map
+	* creates list to store moves for undo function
+	*/
 	public Game () {
 		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
 		moves = new LinkedList<>();
 	}
 	
+	/**
+	* intialises the game settings including difficulty, level, score, timer, etc.
+	* @param difficulty difficulty of the game that has been selected
+	*/
 	@Override
 	public void gameStart(int difficulty) {
 		mapGenerator = new MapGenerator(mapQueue, difficulty);
@@ -50,6 +63,10 @@ public class Game implements GameInterface {
 		this.difficulty = difficulty;
 	}
 	
+	/**
+	* moves the car in desired direction and increments counter that keeps track of moves
+	* @param direction direction user would like to move the car in
+	*/
 	@Override
 	public void moveCar(int direction) {
 		if(activeMap.moveCar(selectedCar, direction)) {
@@ -59,7 +76,10 @@ public class Game implements GameInterface {
 		}
 
 	}
-		
+	/**
+	* moves game to the next level by resetting settings such as moves, adding records to leaderboard appropriately
+	* and generates next level
+	*/
 	@Override
 	public void nextLevel() {
 		if(leaderBoardShown) {
@@ -76,11 +96,17 @@ public class Game implements GameInterface {
 		selectedCar = 0;
 	}
 	
+	/**
+	* sets the car that has been selected by the user and adds to game state
+	*/
 	@Override
 	public void selectCar(int carId) {
 		selectedCar = carId;
 	}
 	
+	/**
+	* function to undo a move made by a user by accessing linked list that stores moves
+	*/
 	@Override
 	public void undo() {
 		if(moves.size() > 0) {
@@ -91,6 +117,10 @@ public class Game implements GameInterface {
 		}
 	}
 	
+	/**
+	* @return returns true if the car is in the winning state 
+	* by checking to position of the car on the x axis (since the red car may only move horizontally)
+	*/
 	@Override
 	public boolean isWin() {
 		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) {
@@ -106,6 +136,9 @@ public class Game implements GameInterface {
 		}
 	}
 	
+	/**
+	* @return returns true if car is in winning state of car in multiplayer
+	*/
 	@Override
 	public boolean isWinMulti() {
 		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) return true;
@@ -113,6 +146,9 @@ public class Game implements GameInterface {
 		return false;
 	}
 	
+	/**
+	* @return returns true if user has completed all levels in the game else false
+	*/
 	@Override
 	public boolean isOver() {
 		if (level == Constants.MAX_LEVEL) return true;
@@ -120,16 +156,26 @@ public class Game implements GameInterface {
 		return false;
 	}
 	
+	/**
+	* @return returns current map in use in game
+	*/
 	@Override
 	public MapInterface getMap() {
 		return activeMap;
 	}
 	
+	/**
+	* @return returns currently selected car by use
+	*/
 	@Override
 	public int getSelectedCar() {
 		return selectedCar;
 	}
 
+	/**
+	* resets the level in the game by re creating the original map
+	* sets appropriate values i.e moves made to 0, etc.
+	*/
 	@Override
 	public void gameRestart() {
 		if(leaderBoardShown) {
@@ -143,11 +189,17 @@ public class Game implements GameInterface {
 		
 	}
 
+	/**
+	* @return returns the number of moves made
+	*/
 	@Override
 	public int getMovesMade() {
 		return movesMade;
 	}
 
+	/**
+	* generates a new map for the game (random generation of cars spawned)
+	*/
 	private void generateMap() {
 		try {
 			initMap = mapQueue.remove();
@@ -157,6 +209,9 @@ public class Game implements GameInterface {
 		}
 	}
 
+	/**
+	* function to save the score of the user to leaderboard
+	*/
 	public void saveScore() {
 		String name = inGameLeaderBoard.getName();
 		if(name != null) {
@@ -168,23 +223,35 @@ public class Game implements GameInterface {
 		}
 	}
 
+	/**
+	* sets the game panel and initialises new leaderboard
+	*/
 	public void setPanel(GamePanel panel) {
 		this.panel = panel;
 		inGameLeaderBoard = new InGameLeaderBoard();
 	}
 
+	/**
+	* exits game
+	*/
 	@Override
 	public void quit() {
 		t.interrupt();
 		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
 	}
 
+	/**
+	* @return returns the current level the user is on
+	*/
 	@Override
 	public int getLevel() {
 		return level;
 		
 	}
 	
+	/**
+	* clones current map of a game
+	*/
 	@Override
 	public void gameClone(MapInterface map) {
 		activeMap = map.clone();	

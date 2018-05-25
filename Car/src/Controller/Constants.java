@@ -1,4 +1,8 @@
 package Controller;
+
+/**
+* list of constants that are used throughout the game in various places
+*/
 public class Constants {
 	public static final int RED = 1;
 	
