@@ -12,6 +12,9 @@ import java.util.Random;
 
 import javax.swing.*;
 
+/**
+* visual implementatoin of the game during "playing" state
+*/
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel {
 	private GameInterface game;
@@ -41,6 +44,11 @@ public class GamePanel extends JPanel {
 	
 	private Point mousePoint;
 	
+	/**
+	* constructor
+	* @param game reference to the game where the main back-end logic occurs
+	* initialises buttons and displays (i.e score, time, backgrounds, map/cars) as appropriate
+	*/
 	public GamePanel (GameInterface game) {
 		game.setPanel(this);
 		time = 0;
@@ -101,6 +109,9 @@ public class GamePanel extends JPanel {
 
 	}
 	
+	/**
+	* function to attach car images from the database to variables
+	*/
 	private void readCarImgs() {
 		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");	
 		carShortVertical = new ArrayList<>();
@@ -133,6 +144,9 @@ public class GamePanel extends JPanel {
 				
 	}
 
+	/**
+	* variable to bind keyboard controls
+	*/
 	private void bindKeys() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
 		this.getActionMap().put("move up", new MoveAction(game, this, Constants.UP));
@@ -156,24 +170,42 @@ public class GamePanel extends JPanel {
 		
 	}
 
+	/**
+	* @return cars returns an array list of cars on the board
+	*/
 	public ArrayList<CarComponent> getCars() {
 		return cars;
 	}
 	
+	/**
+	* sets the mouse pointer
+	*/
 	public void setMousePoint(Point mousePoint) {
 		this.mousePoint = mousePoint;
 	}
 	
+	/**
+	* returns the mouse pointer
+	*/
 	public Point getMousePoint() {
 		return mousePoint;
 	}
 	
+	/**
+	* calls functions to change graphics accordingly
+	*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		doDrawing(g);
 	}
 	
+	/**
+	* function to change the graphics of the game visuals
+	* includes changing to winning screen when goal state is achieved where final stats (time, score) is displayed and appropriate buttons set
+	* or visuals for pause screen
+	* or visuals for new state of map/cars after a move has been made or even registered
+	*/
 	private void doDrawing(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		
@@ -316,14 +348,27 @@ public class GamePanel extends JPanel {
 		
 	}
 
+	/**
+	* set game state to be paused
+	*/
 	public void pause() {
 		isPaused = true;
 	}
 	
+	/**
+	* set game state to be unpause
+	*/
 	public void unpause() {
 		isPaused = false;
 	}
 
+	/**
+	* helper function to create a button
+	* @param name name of the button to be created as well as name for reference for actions
+	* @param x position for button to be set in horizontal axis
+	* @param y position for button to be set in vertical axis
+	* @return returns button that has been requested to be created
+	*/
 	private JButton createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
 		//set images in background
@@ -343,14 +388,23 @@ public class GamePanel extends JPanel {
 		return button;
 	}
 
+	/**
+	* restarts the timer for a level
+	*/
 	public void restartTime() {
 		time = 0;
 	}
 	
+	/**
+	* removes all current cars in preperation for next level
+	*/
 	public void nextLevel() {
 		cars.clear();
 	}
 
+	/**
+	* returns the time taken so far on a level in appropriate formar minutes, seconds, milliseconds
+	*/
 	public Date getTime() {
 		try {
 			return new SimpleDateFormat("mm:ss:SS").parse(new SimpleDateFormat("mm:ss:SS").format(new Date(time)));

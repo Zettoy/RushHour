@@ -12,6 +12,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+* visual implemention of page to select difficulty of game
+*/
 @SuppressWarnings("serial")
 public class selectDifficulty extends JPanel {
 	private MainFrame mainFrame;
@@ -21,6 +24,9 @@ public class selectDifficulty extends JPanel {
 		//this.setLayout(new BorderLayout());
 	}
 	
+	/**
+	* function to create/ draw up panel, adding all buttons as appropriate
+	*/
 	public void startPanel() {
 		this.createButton("Easy", 300, 100);
 		this.createButton("Medium", 100, 200);
@@ -28,6 +34,13 @@ public class selectDifficulty extends JPanel {
 		this.createButton("Main Menu", 100, 400);
 	}
 	
+	/**
+	* helper function to create a button
+	* @param name name of the button to be created as well as name for reference for actions
+	* @param x position for button to be set in horizontal axis
+	* @param y position for button to be set in vertical axis
+	* @return returns button that has been requested to be created
+	*/
 	private void createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
 		//set images in background

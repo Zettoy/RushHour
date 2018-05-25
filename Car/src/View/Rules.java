@@ -12,14 +12,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+* visual implentation of the rules page for user
+*/
 @SuppressWarnings("serial")
 public class Rules extends JPanel {
 	MainFrame mainFrame;
 	
+	/**
+	* constructor
+	* @param mainFrame the grame that this panel will be attaches to
+	*/
 	public Rules(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 	
+	/**
+	* function to create/ draw up panel, adding all buttons as appropriate
+	*/
 	public void startPanel() {
 		JButton button = new JButton("Main Menu");
 		button.setActionCommand("Main Menu");

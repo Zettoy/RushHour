@@ -21,7 +21,7 @@ public class Move {
 	}
 
 	/**
-	* function to set opposite direction
+	* function to set opposite direction which is used for the undo function to know which way to traverse to back track
 	*/
 	private void setOppDirection(int direction) {
 		if(direction == Constants.DOWN) {
@@ -53,7 +53,7 @@ public class Move {
 	}
 	
 	/**
-	* @return returns opposite direction
+	* @return returns opposite direction of a move
 	*/
 	public int getOppDirection() {
 		return oppDirection;

@@ -13,6 +13,9 @@ import java.util.Random;
 
 import javax.swing.*;
 
+/**
+* all visuals for the multiplayer
+*/
 @SuppressWarnings("serial")
 public class MultiPanel extends JPanel{
 	private GameInterface game1;
@@ -38,6 +41,11 @@ public class MultiPanel extends JPanel{
 	
 	private Point mousePoint;
 	
+	/**
+	* constructor
+	* @param game reference to the game where the main back-end logic occurs
+	* initialises buttons and displays (i.e score, time, backgrounds, map/cars) as appropriate
+	*/
 	public MultiPanel (GameInterface game1, GameInterface game2) {
 		time = 0;
 		this.game1 = game1;
@@ -94,6 +102,9 @@ public class MultiPanel extends JPanel{
 
 	}
 	
+	/**
+	* function to attach car images from the database to variables
+	*/
 	private void readCarImgs() {
 		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");	
 		carShortVertical = new ArrayList<>();
@@ -126,6 +137,9 @@ public class MultiPanel extends JPanel{
 				
 	}
 
+	/**
+	* variable to bind keyboard controls
+	*/
 	private void bindKeys() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
 		this.getActionMap().put("move up", new MoveActionMulti(game1, this, Constants.UP));
@@ -149,18 +163,30 @@ public class MultiPanel extends JPanel{
 		
 	}
 
+	/**
+	* @return cars returns an array list of cars on the board
+	*/
 	public ArrayList<CarComponent> getCars() {
 		return cars;
 	}
 	
+	/**
+	* sets the mouse pointer
+	*/
 	public void setMousePoint(Point mousePoint) {
 		this.mousePoint = mousePoint;
 	}
 	
+	/**
+	* returns the mouse pointer
+	*/
 	public Point getMousePoint() {
 		return mousePoint;
 	}
 	
+	/**
+	* calls functions to change graphics accordingly
+	*/
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -168,6 +194,12 @@ public class MultiPanel extends JPanel{
 		doDrawing2(g);
 	}
 	
+	/**
+	* function to change the graphics of the game visuals FOR PLAYER 1
+	* includes changing to winning screen when goal state is achieved where final stats (time, score) is displayed and appropriate buttons set
+	* or visuals for pause screen
+	* or visuals for new state of map/cars after a move has been made or even registered
+	*/
 	private void doDrawing(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		
@@ -275,6 +307,12 @@ public class MultiPanel extends JPanel{
 
 	}
 	
+	/**
+	* function to change the graphics of the game visuals FOR PLAYER 2
+	* includes changing to winning screen when goal state is achieved where final stats (time, score) is displayed and appropriate buttons set
+	* or visuals for pause screen
+	* or visuals for new state of map/cars after a move has been made or even registered
+	*/
 	private void doDrawing2(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g.create();
 		
@@ -384,14 +422,23 @@ public class MultiPanel extends JPanel{
 		
 	}
 
+	/**
+	* restarts the timer for a level
+	*/
 	public void restartTime() {
 		time = 0;
 	}
 	
+	/**
+	* removes all current cars in preperation for next level
+	*/
 	public void nextLevel() {
 		cars.clear();
 	}
 
+	/**
+	* returns the time taken so far on a level in appropriate formar minutes, seconds, milliseconds
+	*/
 	public Date getTime() {
 		try {
 			return new SimpleDateFormat("mm:ss:SS").parse(new SimpleDateFormat("mm:ss:SS").format(new Date(time)));

@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
 
+/**
+* visuals implementation to view the leader board/ score board
+*/
 @SuppressWarnings("serial")
 public class ViewLeaderBoard extends JPanel{
     private MainFrame mainFrame;
@@ -16,13 +19,19 @@ public class ViewLeaderBoard extends JPanel{
     private JLabel nameLabel;
     private JLabel timeLabel;
 
+    /**
+    * constructor
+    * @param mainFrame the frame that this panel will be attached to
+    */
     public ViewLeaderBoard(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         this.setLayout(null);
         this.setBackground(Color.WHITE);
     }
 
-
+    /**
+    * function to create/ draw up panel, adding all buttons as appropriate
+    */
     public void startPanel() {
         JLabel titleLabel = new JLabel("Leaderboard");
         titleLabel.setBounds(20,5,400, 65);
@@ -35,6 +44,11 @@ public class ViewLeaderBoard extends JPanel{
         this.createButton("Main Menu", 200, 500);
     }
 
+    /**
+    * function to add text/ labels for the scores that are being kept track of
+    * @param difficulty the difficulty to be kept track of i.e easy, medium, hard
+    * @param number a number that gives indication of where to place/ set bound of label
+    */
     private void addDifficultyLabels(int difficulty, int number) {
         LeaderBoard leaderBoard = new LeaderBoard(3, difficulty);
         Score[] scores = leaderBoard.getScores();
@@ -63,6 +77,13 @@ public class ViewLeaderBoard extends JPanel{
         }
     }
 
+    /**
+    * helper function to create a button
+    * @param name name of the button to be created as well as name for reference for actions
+    * @param x position for button to be set in horizontal axis
+    * @param y position for button to be set in vertical axis
+    * @return returns button that has been requested to be created
+    */
     private void createButton(String name, int x, int y) {
         JButton button = new JButton(name);
         //set images in background

@@ -11,14 +11,24 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+* all visuals for the main menu
+*/
 @SuppressWarnings("serial")
 public class MainMenu extends JPanel {
 	private MainFrame mainFrame;
 	
+	/**
+	* constructor
+	* @param mainFrame the frame that this panel will be attached to
+	*/
 	public MainMenu(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 	
+	/**
+	* function to create/ draw up panel, adding all buttons as appropriate
+	*/
 	public void startPanel() {
 		this.createButton("New Game", 300, 100);
 		this.createButton("Rules", 100, 200);
@@ -27,6 +37,13 @@ public class MainMenu extends JPanel {
 		this.createButton("Quit", 100, 400);
 	}
 	
+	/**
+	* helper function to create a button
+	* @param name name of the button to be created as well as name for reference for actions
+	* @param x position for button to be set in horizontal axis
+	* @param y position for button to be set in vertical axis
+	* @return returns button that has been requested to be created
+	*/
 	private void createButton(String name, int x, int y) {
 		JButton button = new JButton(name);
 		//set images in background
