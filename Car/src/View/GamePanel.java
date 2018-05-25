@@ -95,12 +95,12 @@ public class GamePanel extends JPanel {
 		movesLabel.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel);
 		
-		nextLevel = createButton("Next Level", 225,395);
+		nextLevel = createEndingButton("Next Level", 200,395);
 		remove(nextLevel);
-		undo = createButton("Undo", 350, 500);
+		undo = createButton("Undo", 370, 500);
 		exit = createButton("Return", 90, 500);
-		pause = createButton("Pause", 220, 500);
-		unpause = createButton("Play", 220, 500);
+		pause = createButton("Pause", 230, 500);
+		unpause = createButton("Play", 230, 500);
 
 		readCarImgs();
 		bindKeys();
@@ -341,9 +341,9 @@ public class GamePanel extends JPanel {
 			add(undo);
 			add(pause);
 			//restart.setLocation(390,500);
-			undo.setLocation(350, 500);
+			undo.setLocation(370, 500);
 			exit.setLocation(90,500);
-			pause.setLocation(220, 500);
+			pause.setLocation(230,500);
 		}
 		
 	}
@@ -381,7 +381,26 @@ public class GamePanel extends JPanel {
 		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
 		button.setActionCommand(name);
 		button.setBounds(400, 100, 100, 40);
-		button.setBounds(x, y, 150, 50);
+		button.setBounds(x, y, 130, 50);
+		button.addActionListener(new GameButtonListener(game, this));
+		//add button to the panel
+		this.add(button);
+		return button;
+	}
+
+	private JButton createEndingButton(String name, int x, int y) {
+		JButton button = new JButton(name);
+		//set images in background
+		//Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
+		//Image scaledImg = image.getScaledInstance(125, 50, Image.SCALE_SMOOTH);
+		//ImageIcon icon = new ImageIcon(scaledImg);
+		//button.setIcon(icon);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		//TODO: MAKE TRANSPARENT
+		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
+		button.setActionCommand(name);
+		button.setBounds(400, 100, 100, 40);
+		button.setBounds(x, y, 200, 50);
 		button.addActionListener(new GameButtonListener(game, this));
 		//add button to the panel
 		this.add(button);
