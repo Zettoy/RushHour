@@ -40,10 +40,11 @@ public class MultiPanel extends JPanel{
 	private String time2;
 	
 	private Point mousePoint;
+
+	private JButton menu;
 	
 	/**
 	* constructor
-	* @param game reference to the game where the main back-end logic occurs
 	* initialises buttons and displays (i.e score, time, backgrounds, map/cars) as appropriate
 	*/
 	public MultiPanel (GameInterface game1, GameInterface game2) {
@@ -99,6 +100,8 @@ public class MultiPanel extends JPanel{
 		bindKeys();
 		
 		this.requestFocus();
+
+		menu = createButton("Return", 550, 525);
 
 	}
 	
@@ -445,5 +448,24 @@ public class MultiPanel extends JPanel{
 		} catch (ParseException e) {
 			return null;
 		}
+	}
+
+	private JButton createButton(String name, int x, int y) {
+		JButton button = new JButton(name);
+		//set images in background
+		//Image image = Toolkit.getDefaultToolkit().getImage("./pics/newLights.png");
+		//Image scaledImg = image.getScaledInstance(125, 50, Image.SCALE_SMOOTH);
+		//ImageIcon icon = new ImageIcon(scaledImg);
+		//button.setIcon(icon);
+		button.setHorizontalTextPosition(SwingConstants.CENTER);
+		//TODO: MAKE TRANSPARENT
+		button.setFont(new Font("TimesRoman", Font.BOLD, 19));
+		button.setActionCommand(name);
+		button.setBounds(400, 100, 100, 40);
+		button.setBounds(x, y, 130, 50);
+		button.addActionListener(new MultiButtonListener(game1, game2,this));
+		//add button to the panel
+		this.add(button);
+		return button;
 	}
 }

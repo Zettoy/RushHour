@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import Controller.Game;
 import Controller.GameInterface;
 import Model.GameButtonListener;
+import Model.MultiButtonListener;
 
 /**
 * code to manage the visuals/frames of all panels that will be used in entire program
@@ -50,6 +51,8 @@ public class MainFrame extends JFrame {
 		game.setPanel(gamePanel);
 		GameButtonListener gameButtonListener = new GameButtonListener(game, gamePanel);
 		gameButtonListener.setMainFrame(this);
+		MultiButtonListener multiButtonListener = new MultiButtonListener(game,game2, multiGame);
+		multiButtonListener.setMainFrame(this);
 		currentPanel = mainMenu;
 	}
 	

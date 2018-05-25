@@ -91,6 +91,7 @@ public class LeaderBoard {
             int moves;
             Score score;
             sc.useDelimiter(";");
+            // Reads from file
             while (sc.hasNext()) {
                 name = sc.next();
                 time = new SimpleDateFormat("mm:ss:SS").parse(sc.next());
