@@ -102,6 +102,13 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
+	public boolean isWinMulti() {
+		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) return true;
+		
+		return false;
+	}
+	
+	@Override
 	public boolean isOver() {
 		if (level == Constants.MAX_LEVEL) return true;
 		

@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -23,11 +25,13 @@ public class MultiPanel extends JPanel{
 	private JLabel completeLabel2;
 
 	private Image redCar;
-	private Image blueCarShortVertical;
-	private Image blueCarShortHorizontal;
-	private Image blueCarLongVertical;
-	private Image blueCarLongHorizontal;
+	private ArrayList<Image> carShortVertical;
+	private ArrayList<Image> carShortHorizontal;
+	private ArrayList<Image> carLongVertical;
+	private ArrayList<Image> carLongHorizontal;
 
+	private String time1;
+	private String time2;
 	
 	private Point mousePoint;
 	
@@ -80,18 +84,45 @@ public class MultiPanel extends JPanel{
 		movesLabel2.setFont(new Font("Arial", Font.PLAIN,20));
 		this.add(movesLabel2);
 			
-		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
-		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
-		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
-		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
-		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
-
+		readCarImgs();
 		bindKeys();
 		
 		this.requestFocus();
 
 	}
 	
+	private void readCarImgs() {
+		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");	
+		carShortVertical = new ArrayList<>();
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_short_v.png"));
+			
+		carShortHorizontal = new ArrayList<>();
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_short_h.png"));
+				
+		carLongVertical = new ArrayList<>();
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_long_v.png"));
+			
+		carLongHorizontal = new ArrayList<>();
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_long_h.png"));
+				
+	}
+
 	private void bindKeys() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
 		this.getActionMap().put("move up", new MoveActionMulti(game1, this, Constants.UP));
@@ -163,7 +194,8 @@ public class MultiPanel extends JPanel{
 			if (cars.size() >= numCars) break;
 			
 			int carId = i + Constants.RED;
-			cars.add(new CarComponent(carId));
+			Random rand = new Random();
+			cars.add(new CarComponent(carId, rand.nextInt(5)));
 		}
 		
 		for (CarComponent c : cars) {
@@ -178,7 +210,8 @@ public class MultiPanel extends JPanel{
 			c.setStartY(y);
 			
 			if (car.isRedCar()) {
-				g2d.drawImage(redCar, x, y, 132, 62, this);
+				g2d.setColor(Color.RED);
+				g2d.fillRect(x , y, 132, 62);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
 				
@@ -188,30 +221,32 @@ public class MultiPanel extends JPanel{
 				if (direction == Constants.HORIZONTAL) {
 					int width = 60 * length + 10 * (length - 1) + 2;
 					int height = 62;
-					Image carToDraw = null;
-					if (width > 180) carToDraw = blueCarLongHorizontal;
-					if (width < 180) carToDraw = blueCarShortHorizontal;
-
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.fillRect(x, y, width, height);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 					
 				} else if (direction == Constants.VERTICAL) {
 					int width = 62;
 					int height = 60 * length + 10 * (length - 1) + 2;
-					Image carToDraw = null;
-					if (height > 180) carToDraw = blueCarLongVertical;
-					if (height < 180) carToDraw = blueCarShortVertical;
-
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.fillRect(x, y, width, height);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 				}
 			}
 			
+			Character carIdForDisplay = (char) (c.getCarId() + 'A' - 1);
+			
+			g.setFont(new Font("Arial", Font.BOLD, 25));
+			g.setColor(Color.WHITE);
+			g.drawString(carIdForDisplay + "", p.getX() * 70 + 95 , p.getY() * 70 + 105);
+			
 		}
 
-		if (game1.isWin()) {
+		boolean processed = false;
+		if (game1.isWinMulti()) {
+			if (processed == true) return;
+			processed = true;
+			
 			g.setColor(Color.BLACK);
 			g.fillRect(50 , 50, 500, 500);
 			g.setColor(Color.WHITE);
@@ -219,24 +254,22 @@ public class MultiPanel extends JPanel{
 
 			this.add(completeLabel);
 
-			timer.stop();
+			if (game2.isWinMulti()) timer.stop();
 			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			movesLabel.setLocation(175,110);
 			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			timeLabel.setLocation(175,150);
-			if (game1.isOver()) {
-				completeLabel.setText("GAME OVER");
-				return;
-			}
-		} else if (!timer.isRunning()) {
-			//time = 0;
-			timer.restart();
-			movesLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			movesLabel.setLocation(90,25);
-			timeLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			timeLabel.setLocation(370,25);
+			
+			return;
 		}
 		
+		CarInterface selectedCar = game1.getMap().getCar(game1.getSelectedCar());
+		if (selectedCar == null) return;
+		Position selectedP = selectedCar.getPosition();
+		
+		g2d.setColor(Color.WHITE);
+		g2d.fillRect(selectedP.getX() * 70 + 95, selectedP.getY() * 70 + 85, 20, 20);
+
 	}
 	
 	private void doDrawing2(Graphics g) {
@@ -257,7 +290,7 @@ public class MultiPanel extends JPanel{
 			}
 		}
 
-		movesLabel.setText("Moves Made: "+ game2.getMovesMade());
+		movesLabel2.setText("Moves Made: "+ game2.getMovesMade());
 
 
 		int numCars = game2.getMap().getNumCars();
@@ -268,7 +301,8 @@ public class MultiPanel extends JPanel{
 			if (cars.size() >= numCars) break;
 			
 			int carId = i + Constants.RED;
-			cars.add(new CarComponent(carId));
+			Random rand = new Random();
+			cars.add(new CarComponent(carId, rand.nextInt(5)));
 		}
 		
 		for (CarComponent c : cars) {
@@ -294,8 +328,8 @@ public class MultiPanel extends JPanel{
 					int width = 60 * length + 10 * (length - 1) + 2;
 					int height = 62;
 					Image carToDraw = null;
-					if (width > 180) carToDraw = blueCarLongHorizontal;
-					if (width < 180) carToDraw = blueCarShortHorizontal;
+					if (width > 180) carToDraw = carLongHorizontal.get(c.getColor());
+					if (width < 180) carToDraw = carShortHorizontal.get(c.getColor());
 
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
@@ -305,8 +339,8 @@ public class MultiPanel extends JPanel{
 					int width = 62;
 					int height = 60 * length + 10 * (length - 1) + 2;
 					Image carToDraw = null;
-					if (height > 180) carToDraw = blueCarLongVertical;
-					if (height < 180) carToDraw = blueCarShortVertical;
+					if (height > 180) carToDraw = carLongVertical.get(c.getColor());
+					if (height < 180) carToDraw = carShortVertical.get(c.getColor());
 
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
@@ -316,32 +350,34 @@ public class MultiPanel extends JPanel{
 			
 		}
 
-		if (game1.isWin()) {
+		boolean processed = false;
+		if (game2.isWinMulti()) {
+			if (processed == true) return;
+			
 			g.setColor(Color.BLACK);
 			g.fillRect(650 , 50, 500, 500);
 			g.setColor(Color.WHITE);
 			g.fillRect(675 , 75, 450, 450);
 
-			this.add(completeLabel);
+			this.add(completeLabel2);
 
-			timer.stop();
+			if (game1.isWinMulti()) timer.stop();
 			movesLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-			movesLabel2.setLocation(175,110);
-			timeLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel2.setLocation(175,150);
-			if (game2.isOver()) {
-				completeLabel2.setText("GAME OVER");
-				return;
-			}
+			movesLabel2.setLocation(775,110);
+			
+			if (processed == false) time2 = timeLabel2.getText();
+			
+			this.remove(timeLabel2);
+			JLabel completeTimeLabel = new JLabel(time2, JLabel.CENTER);
+			completeTimeLabel.setBounds(775, 150, 250, 80);
+			completeTimeLabel.setForeground(Color.BLACK);
+			completeTimeLabel.setFont(new Font("Arial", Font.PLAIN,20));
 
-		} else if (!timer.isRunning()) {
-			//time = 0;
-			timer.restart();
-			movesLabel2.setHorizontalAlignment(SwingConstants.LEFT);
-			movesLabel2.setLocation(690,25);
-			timeLabel2.setHorizontalAlignment(SwingConstants.LEFT);
-			timeLabel2.setLocation(970,25);
+			this.add(completeTimeLabel);
+			
+			processed = true;
 		}
+
 		
 	}
 

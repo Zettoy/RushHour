@@ -40,7 +40,7 @@ public class MouseDragDropMulti implements MouseMotionListener {
 			dy = 0;
 		}
 		multiPanel.repaint();
-		if (game2.isWin()) game2.selectCar(0);
+		if (game2.isWinMulti()) game2.selectCar(0);
 
 	}
 

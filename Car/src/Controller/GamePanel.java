@@ -7,6 +7,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -28,10 +30,12 @@ public class GamePanel extends JPanel {
 	private JButton unpause;
 
 	private Image redCar;
-	private Image blueCarShortVertical;
-	private Image blueCarShortHorizontal;
-	private Image blueCarLongVertical;
-	private Image blueCarLongHorizontal;
+	//private Image blueCarShortVertical;
+	private ArrayList<Image> carShortVertical;
+	private ArrayList<Image> carShortHorizontal;
+	private ArrayList<Image> carLongVertical;
+	private ArrayList<Image> carLongHorizontal;
+
 	private boolean isPaused;
 	
 	private Point mousePoint;
@@ -87,19 +91,46 @@ public class GamePanel extends JPanel {
 		exit = createButton("Return", 90, 500);
 		pause = createButton("Pause", 220, 500);
 		unpause = createButton("Play", 220, 500);
-		
-		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");
-		blueCarShortVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png");
-		blueCarShortHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png");
-		blueCarLongVertical = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png");
-		blueCarLongHorizontal = Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png");
 
+		readCarImgs();
 		bindKeys();
 		
 		this.requestFocus();
 
 	}
 	
+	private void readCarImgs() {
+		redCar = Toolkit.getDefaultToolkit().getImage("./pics/red_car.png");	
+		carShortVertical = new ArrayList<>();
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_short_v.png"));
+		carShortVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_short_v.png"));
+			
+		carShortHorizontal = new ArrayList<>();
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_short_h.png"));
+		carShortHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_short_h.png"));
+				
+		carLongVertical = new ArrayList<>();
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_long_v.png"));
+		carLongVertical.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_long_v.png"));
+			
+		carLongHorizontal = new ArrayList<>();
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/blue_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/deepblue_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/green_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/yellow_car_long_h.png"));
+		carLongHorizontal.add(Toolkit.getDefaultToolkit().getImage("./pics/grey_car_long_h.png"));
+				
+	}
+
 	private void bindKeys() {
 		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "move up");
 		this.getActionMap().put("move up", new MoveAction(game, this, Constants.UP));
@@ -171,7 +202,8 @@ public class GamePanel extends JPanel {
 			if (cars.size() >= numCars) break;
 			
 			int carId = i + Constants.RED;
-			cars.add(new CarComponent(carId));
+			Random rand = new Random();
+			cars.add(new CarComponent(carId, rand.nextInt(5)));
 		}
 		
 		for (CarComponent c : cars) {
@@ -197,8 +229,8 @@ public class GamePanel extends JPanel {
 					int width = 60 * length + 10 * (length - 1) + 2;
 					int height = 62;
 					Image carToDraw = null;
-					if (width > 180) carToDraw = blueCarLongHorizontal;
-					if (width < 180) carToDraw = blueCarShortHorizontal;
+					if (width > 180) carToDraw = carLongHorizontal.get(c.getColor());
+					if (width < 180) carToDraw = carShortHorizontal.get(c.getColor());
 
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
@@ -208,8 +240,8 @@ public class GamePanel extends JPanel {
 					int width = 62;
 					int height = 60 * length + 10 * (length - 1) + 2;
 					Image carToDraw = null;
-					if (height > 180) carToDraw = blueCarLongVertical;
-					if (height < 180) carToDraw = blueCarShortVertical;
+					if (height > 180) carToDraw = carLongVertical.get(c.getColor());
+					if (height < 180) carToDraw = carShortVertical.get(c.getColor());
 
 					g2d.drawImage(carToDraw, x, y, width, height, this);
 					c.setEndX(x + width);
