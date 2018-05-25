@@ -21,6 +21,7 @@ public class MainMenu extends JPanel {
 		this.createButton("New Game", 300, 100);
 		this.createButton("Rules", 100, 200);
 		this.createButton("Leader Board", 100, 300);
+		this.createButton("Multi players", 300, 400);
 		this.createButton("Quit", 100, 400);
 	}
 	

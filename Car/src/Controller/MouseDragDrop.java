@@ -14,7 +14,7 @@ public class MouseDragDrop implements MouseMotionListener {
 		this.game = game;
 		this.gamePanel = gamePanel;
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent event) {
 		if (game.getSelectedCar() == 0) return;
@@ -44,6 +44,7 @@ public class MouseDragDrop implements MouseMotionListener {
 		if (game.isWin()) game.selectCar(0);
 	}
 
+	
 	@Override
 	public void mouseMoved(MouseEvent arg0) {}
 }

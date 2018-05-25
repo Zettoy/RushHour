@@ -9,6 +9,7 @@ public interface GameInterface {
 	MapInterface getMap();
 	int getSelectedCar();
 	boolean isWin();
+	boolean isWinMulti();
 	boolean isOver();
 	int getMovesMade();
 	void nextLevel();
@@ -16,4 +17,5 @@ public interface GameInterface {
 	void setPanel(GamePanel panel);
 	int getLevel();
 	void saveScore();
+	void gameClone(MapInterface map);
 }

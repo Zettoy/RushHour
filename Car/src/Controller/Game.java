@@ -102,6 +102,13 @@ public class Game implements GameInterface {
 	}
 	
 	@Override
+	public boolean isWinMulti() {
+		if (activeMap.getCar(Constants.RED).getPosition().getX() == 4) return true;
+		
+		return false;
+	}
+	
+	@Override
 	public boolean isOver() {
 		if (level == Constants.MAX_LEVEL) return true;
 		
@@ -173,6 +180,12 @@ public class Game implements GameInterface {
 		
 	}
 	
+	@Override
+	public void gameClone(MapInterface map) {
+		activeMap = map.clone();	
+		movesMade = 0;
+		selectedCar = 0;
+	}
 	/* Example of using other map generators
 	private void generateMapHard() {
 		mapGenerator = new MapGeneratorHard();
