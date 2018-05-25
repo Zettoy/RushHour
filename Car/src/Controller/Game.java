@@ -1,6 +1,6 @@
 package Controller;
 
-import Model.BoundedQueue;
+import Model.BoundedLinkedQueue;
 import Model.LeaderBoard;
 import Model.MapGenerator;
 import Model.MapGeneratorInterface;
@@ -27,7 +27,7 @@ public class Game implements GameInterface {
 	private GamePanel panel;
 	private InGameLeaderBoard inGameLeaderBoard;
 	
-	private BoundedQueue<MapInterface> mapQueue;
+	private BoundedLinkedQueue<MapInterface> mapQueue;
 
 	private int level;
 	private int scorePosition;
@@ -39,7 +39,7 @@ public class Game implements GameInterface {
 	* creates list to store moves for undo function
 	*/
 	public Game () {
-		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
+		mapQueue = new BoundedLinkedQueue<MapInterface>(Constants.MAX_LEVEL);
 		moves = new LinkedList<>();
 	}
 	
@@ -237,7 +237,7 @@ public class Game implements GameInterface {
 	@Override
 	public void quit() {
 		t.interrupt();
-		mapQueue = new BoundedQueue<MapInterface>(Constants.MAX_LEVEL);
+		mapQueue = new BoundedLinkedQueue<MapInterface>(Constants.MAX_LEVEL);
 	}
 
 	/**
