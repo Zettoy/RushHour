@@ -249,7 +249,7 @@ public class MultiPanel extends JPanel{
 			
 			if (car.isRedCar()) {
 				g2d.setColor(Color.RED);
-				g2d.fillRect(x , y, 132, 62);
+				g2d.fillRect(x , y, 131, 61);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
 				
