@@ -214,9 +214,9 @@ public class GamePanel extends JPanel {
 			for (int j = 0; j < 6; j ++) {
 				if (i == 5 && j == 2) {
 					g2d.setColor(Color.RED);
-					g2d.fillRect(i * 70 + 88, j * 70 + 78, 64, 64);
+					g2d.fillRect(i * 70 + 88, j * 70 + 78, 65, 65);
 					g2d.setColor(Color.WHITE);
-					g2d.fillRect(i * 70 + 90, j * 70 + 80, 60, 60);
+					g2d.fillRect(i * 70 + 90, j * 70 + 80, 61, 61);
 					g2d.setColor(Color.GRAY);
 				} else {
 					g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
@@ -266,7 +266,7 @@ public class GamePanel extends JPanel {
 					if (width > 180) carToDraw = carLongHorizontal.get(c.getColor());
 					if (width < 180) carToDraw = carShortHorizontal.get(c.getColor());
 
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.drawImage(carToDraw, x, y, width - 1, height - 1, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 					
@@ -277,7 +277,7 @@ public class GamePanel extends JPanel {
 					if (height > 180) carToDraw = carLongVertical.get(c.getColor());
 					if (height < 180) carToDraw = carShortVertical.get(c.getColor());
 
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.drawImage(carToDraw, x, y, width - 1, height - 1, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 				}

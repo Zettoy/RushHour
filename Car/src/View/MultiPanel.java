@@ -211,9 +211,9 @@ public class MultiPanel extends JPanel{
 			for (int j = 0; j < 6; j ++) {
 				if (i == 5 && j == 2) {
 					g2d.setColor(Color.RED);
-					g2d.fillRect(i * 70 + 88, j * 70 + 78, 64, 64);
+					g2d.fillRect(i * 70 + 88, j * 70 + 78, 65, 65);
 					g2d.setColor(Color.WHITE);
-					g2d.fillRect(i * 70 + 90, j * 70 + 80, 60, 60);
+					g2d.fillRect(i * 70 + 90, j * 70 + 80, 61, 61);
 					g2d.setColor(Color.GRAY);
 				} else {
 					g2d.drawRect(i * 70 + 90, j * 70 + 80, 60, 60);
@@ -259,14 +259,14 @@ public class MultiPanel extends JPanel{
 				if (direction == Constants.HORIZONTAL) {
 					int width = 60 * length + 10 * (length - 1) + 2;
 					int height = 62;
-					g2d.fillRect(x, y, width, height);
+					g2d.fillRect(x, y, width - 1, height - 1);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 					
 				} else if (direction == Constants.VERTICAL) {
 					int width = 62;
 					int height = 60 * length + 10 * (length - 1) + 2;
-					g2d.fillRect(x, y, width, height);
+					g2d.fillRect(x, y, width - 1, height - 1);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 				}
@@ -283,7 +283,6 @@ public class MultiPanel extends JPanel{
 		boolean processed = false;
 		if (game1.isWinMulti()) {
 			if (processed == true) return;
-			processed = true;
 			
 			g.setColor(Color.BLACK);
 			g.fillRect(50 , 50, 500, 500);
@@ -295,10 +294,18 @@ public class MultiPanel extends JPanel{
 			if (game2.isWinMulti()) timer.stop();
 			movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			movesLabel.setLocation(175,110);
-			timeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			timeLabel.setLocation(175,150);
 			
-			return;
+			if (processed == false) time1 = timeLabel.getText();
+			
+			this.remove(timeLabel);
+			JLabel completeTimeLabel = new JLabel(time1, JLabel.CENTER);
+			completeTimeLabel.setBounds(175, 150, 250, 80);
+			completeTimeLabel.setForeground(Color.BLACK);
+			completeTimeLabel.setFont(new Font("Arial", Font.PLAIN,20));
+
+			this.add(completeTimeLabel);
+			
+			processed = true;
 		}
 		
 		CarInterface selectedCar = game1.getMap().getCar(game1.getSelectedCar());
@@ -324,9 +331,9 @@ public class MultiPanel extends JPanel{
 			for (int j = 0; j < 6; j ++) {
 				if (i == 5 && j == 2) {
 					g2d.setColor(Color.RED);
-					g2d.fillRect(i * 70 + 688, j * 70 + 78, 64, 64);
+					g2d.fillRect(i * 70 + 688, j * 70 + 78, 65, 65);
 					g2d.setColor(Color.WHITE);
-					g2d.fillRect(i * 70 + 690, j * 70 + 80, 60, 60);
+					g2d.fillRect(i * 70 + 690, j * 70 + 80, 61, 61);
 					g2d.setColor(Color.GRAY);
 				} else {
 					g2d.drawRect(i * 70 + 690, j * 70 + 80, 60, 60);
@@ -361,7 +368,7 @@ public class MultiPanel extends JPanel{
 			c.setStartY(y);
 			
 			if (car.isRedCar()) {
-				g2d.drawImage(redCar, x, y, 132, 62, this);
+				g2d.drawImage(redCar, x, y, 131, 61, this);
 				c.setEndX(x + 132);
 				c.setEndY(y + 62);
 				
@@ -375,7 +382,7 @@ public class MultiPanel extends JPanel{
 					if (width > 180) carToDraw = carLongHorizontal.get(c.getColor());
 					if (width < 180) carToDraw = carShortHorizontal.get(c.getColor());
 
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.drawImage(carToDraw, x, y, width - 1, height - 1, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 					
@@ -386,7 +393,7 @@ public class MultiPanel extends JPanel{
 					if (height > 180) carToDraw = carLongVertical.get(c.getColor());
 					if (height < 180) carToDraw = carShortVertical.get(c.getColor());
 
-					g2d.drawImage(carToDraw, x, y, width, height, this);
+					g2d.drawImage(carToDraw, x, y, width - 1, height - 1, this);
 					c.setEndX(x + width);
 					c.setEndY(y + height);
 				}
