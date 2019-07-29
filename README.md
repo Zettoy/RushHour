@@ -1,2 +1,2 @@
-# COMP2511 Project
+# Rush Hour
 Traffic Jam Puzzle
